@@ -23,7 +23,7 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
   return (
     <div className="p-Plants">
       <Headline>
-        All Plants
+        All Plants (7)
         <Button onClick={setNewPlant}>
           New Plant
         </Button>
