@@ -13,7 +13,7 @@ import { useAuthContext } from "@/contexts/Auth";
 import Link from "@/components/ui/Link/Link";
 import Button from "@/components/ui/Button/Button";
 import Icon from "@/components/ui/Icon/Icon";
-import { X, List, MagnifyingGlass } from "@phosphor-icons/react";
+import { X, List } from "@phosphor-icons/react";
 
 // Models
 import { UserSession } from "@/models/User";
@@ -62,19 +62,16 @@ const Layout: any = ({ children, userSession }: { children: ReactNode, userSessi
                 ref={navRef}
             >
                 <div className="l-App--nav__content">
-                    <div className="l-App--logo"> {/* l-App--header */}
+                    <div className="l-App--header">
                         <NextLink href="/" onClick={() => toggleMenu(false, "logo")}>
-                            <Image src="/assets/logo.png" alt="logo" width={60} height={75} priority />
+                            <Image src="/assets/logo.png" alt="logo" width={36} height={45} priority />
                         </NextLink>
-                        <div className="l-App--menu--topButtons--wrapper"> {/* l-App--header__menu */}
+                        <div className="l-App--header__menu">
                             {
                                 isMenuOpen
-                                    ? <button className="l-App--menu--topButton" onClick={() => toggleMenu()}><Icon of={<X weight="bold" />} /></button> // l-App--header__menu__item
-                                    : <div className="l-App--menu--topButtons"> {/* l-App--header__menu__items */}
-                                        <Link href="/?fs=true" className="l-App--menu--topButton">
-                                            <Icon of={<MagnifyingGlass weight="bold" />} />
-                                        </Link>
-                                        <button className="l-App--menu--topButton" onClick={() => toggleMenu()}>
+                                    ? <button className="l-App--header__menu__item" onClick={() => toggleMenu()}><Icon of={<X weight="bold" />} /></button>
+                                    : <div className="l-App--header__menu__items">
+                                        <button className="l-App--header__menu__item" onClick={() => toggleMenu()}>
                                             <Icon of={<List weight="bold" />} />
                                         </button>
                                     </div>
@@ -83,40 +80,20 @@ const Layout: any = ({ children, userSession }: { children: ReactNode, userSessi
                     </div>
                     <div className="l-App--menu">
                         <Link className="l-App--menu__item" onClick={toggleMenu} activePath={pathname} href="/">
-                            Home
+                            Garden
                         </Link>
-                        <Link className="l-App--menu__item" onClick={toggleMenu} activePath={pathname} href="/pricing">
-                            Pricing
+                        <Link className="l-App--menu__item" onClick={toggleMenu} activePath={pathname} href="/plants">
+                            Plants
                         </Link>
                     </div>
-                    {
-                        userSession ?
-                            <div className="l-App--profile"> {/* l-App--user */}
-                                <Button
-                                    inline
-                                    onClick={logoutFunc}
-                                >
-                                    Log Out
-                                </Button>
-                            </div>
-                            :
-                            <div className="l-App--profile"> {/* l-App--user */}
-                                <Button
-                                    inline
-                                    inverted
-                                    href="/auth/signup"
-                                    className="l-App--profile--signupButton"
-                                >
-                                    Sign Up
-                                </Button>
-                                <Button
-                                    inline
-                                    href="/auth/login"
-                                >
-                                    Login
-                                </Button>
-                            </div>
-                    }
+                    <div className="l-App--user">
+                        <Button
+                            inline
+                            onClick={logoutFunc}
+                        >
+                            Log Out
+                        </Button>
+                    </div>
                 </div>
             </div>
             <main className="l-App--content">

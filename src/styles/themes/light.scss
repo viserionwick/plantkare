@@ -40,4 +40,9 @@
   --textFieldIcon: #{rgba($primaryGreen, .5)};
   --textFieldPasswordRevealed: #{$primaryGreen};
   --textFieldRadius: var(--buttonRadius);
+
+  // Header: Menu
+  --menuLink: #{rgba(color.adjust($primaryGreen, $lightness: -20%), .7)};
+  --menuLinkHover:  #{rgba(color.adjust($primaryGreen, $lightness: -20%), .8)};
+  --menuLinkActive: var(--primaryColor);
 }
