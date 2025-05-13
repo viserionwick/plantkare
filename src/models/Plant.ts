@@ -6,7 +6,7 @@ export interface Plant {
     id: string;
     name: string;
     type: string;
-    history: {
+    metadata: {
         weeklyWaterNeed: number;
         expectedHumidity: number;
         createdAt: Timestamp
