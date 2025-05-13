@@ -8,6 +8,7 @@ import { Drop, Leaf } from "@phosphor-icons/react";
 
 type PlantCardProps = {
     className?: string;
+    id: string;
     name: string;
     type: string;
     weeklyWaterNeed: number;
@@ -17,6 +18,7 @@ type PlantCardProps = {
 
 const PlantCard: React.FC<PlantCardProps> = ({
     className,
+    id,
     name,
     type,
     weeklyWaterNeed,
@@ -76,7 +78,10 @@ const PlantCard: React.FC<PlantCardProps> = ({
                     <Icon of={<Leaf />} /><span>{expectedHumidity}%</span> humidity
                 </div>
             </div>
-            <Button className="c-PlantCard--viewDetails">
+            <Button
+                className="c-PlantCard--viewDetails"
+                href={"/plants/" + id}
+            >
                 View Details
             </Button>
         </div>

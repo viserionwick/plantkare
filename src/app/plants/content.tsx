@@ -34,6 +34,7 @@ const CONTENT: NextPage<PROPS> = ({ userSession }) => {
       </Headline>
       <div className="p-Plants--list">
         <PlantCard
+          id={"xxx"}
           name="Test"
           type="Bruh"
           expectedHumidity={10}
@@ -41,6 +42,7 @@ const CONTENT: NextPage<PROPS> = ({ userSession }) => {
           healthPercentage={80}
         />
         <PlantCard
+          id={"xxx"}
           name="Test"
           type="Bruh"
           expectedHumidity={10}
@@ -48,6 +50,7 @@ const CONTENT: NextPage<PROPS> = ({ userSession }) => {
           healthPercentage={80}
         />
         <PlantCard
+          id={"xxx"}
           name="Test"
           type="Bruh"
           expectedHumidity={10}
@@ -55,6 +58,7 @@ const CONTENT: NextPage<PROPS> = ({ userSession }) => {
           healthPercentage={80}
         />
         <PlantCard
+          id={"xxx"}
           name="Test"
           type="Bruh"
           expectedHumidity={10}
@@ -62,6 +66,7 @@ const CONTENT: NextPage<PROPS> = ({ userSession }) => {
           healthPercentage={80}
         />
         <PlantCard
+          id={"xxx"}
           name="Test"
           type="Bruh"
           expectedHumidity={10}
@@ -69,6 +74,7 @@ const CONTENT: NextPage<PROPS> = ({ userSession }) => {
           healthPercentage={80}
         />
         <PlantCard
+          id={"xxx"}
           name="Test"
           type="Bruh"
           expectedHumidity={10}
@@ -76,6 +82,7 @@ const CONTENT: NextPage<PROPS> = ({ userSession }) => {
           healthPercentage={80}
         />
         <PlantCard
+          id={"xxx"}
           name="Test"
           type="Bruh"
           expectedHumidity={10}
