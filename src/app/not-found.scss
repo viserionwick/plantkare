@@ -1,0 +1,33 @@
+.p-NotFound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: var(--background) !important;
+    z-index: 9999;
+    word-break: break-word;
+    margin: 0 20px;
+
+    .p-NotFound--sorryFace {
+        font-size: 48px;
+        color: var(--primaryColor);
+    }
+
+    .p-NotFound--text {
+        font-size: 40px;
+        text-align: center;
+        @include MobileView {
+            font-size: 35px;            
+        }
+    }
+
+    .p-NotFound--button {
+        font-size: 14px;
+        margin-top: 40px;
+    }
+}

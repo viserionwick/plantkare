@@ -1,0 +1,13 @@
+.c-Icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &.loading {
+    all: unset;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: gray;
+    border-radius: 999px;
+  }
+}
