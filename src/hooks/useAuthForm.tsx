@@ -46,7 +46,6 @@ type UseAuthForm = () => {
 
     // Auth Context
     loginUser: AuthContextType["loginUser"];
-    /* loginGuest: LoginGuest; */
     logoutUser: AuthContextType["logoutUser"];
     signupUser: AuthContextType["signupUser"];
     loading: boolean;
@@ -57,11 +56,8 @@ type UseAuthForm = () => {
 const useAuthForm: UseAuthForm = () => {
     const {
         loginUser,
-        /* loginGuest, */
         logoutUser,
         signupUser,
-        /* signupAnonymous, */
-        /* convertAnonymousToUser, */
         forgotPassword, isForgotPasswordEmailSent, setIsForgotPasswordEmailSent,
         loading
     } = useAuthContext();
@@ -99,9 +95,6 @@ const useAuthForm: UseAuthForm = () => {
     // States: Elements
     const [email, setEmail] = useState<UserLoginCredentials["email"]>("");
     const [emailError, setEmailError] = useState<string>("");
-
-    // States: Other
-    /* const [isForgotPasswordEmailSent, setIsForgotPasswordEmailSent] = useState<boolean>(false); */
 
     // Handle Change: Login
     const handleLoginFormChange: HandleLoginFormChange = (e) => {

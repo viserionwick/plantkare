@@ -61,7 +61,7 @@ export type AuthContextType = {
 
 const AuthContext = createContext({} as AuthContextType);
 export const useAuthContext = () => useContext(AuthContext);
-export const AuthProvider = ({ children, userSession }: { children: React.ReactNode, userSession: UserSession }) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Other Contexts
     const {
         setOverlay,
@@ -240,7 +240,6 @@ export const AuthProvider = ({ children, userSession }: { children: React.ReactN
             if (!credentials || !credentials.email || !credentials.password) throw newError(400, "User signup credentials are required.", "signupUser", "required");
             validate_user_email(credentials.email);
             validate_user_password(credentials.password);
-
             // Create user.
             await setPersistence(dbAuth, browserLocalPersistence);
             const createdUser = await createUserWithEmailAndPassword(dbAuth, credentials.email, credentials.password!);

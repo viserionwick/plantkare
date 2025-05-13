@@ -1,23 +1,25 @@
-// Essentials
-import * as admin from "firebase-admin";
+// fbAdmin.ts
+import { initializeApp, cert, getApps, getApp } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
+import { getFirestore, FieldValue } from "firebase-admin/firestore";
 
 // Utils
 import { serverEnv } from "@/utils/env/serverEnv";
 
-if (!admin.apps.length) {
-    admin.initializeApp({
-        credential: admin.credential.cert({
-            projectId: serverEnv.FIREBASE_PROJECT_ID,
-            clientEmail: serverEnv.FIREBASE_CLIENT_EMAIL,
-            privateKey: serverEnv.FIREBASE_PRIVATE_KEY,
+const app =
+  getApps().length === 0
+    ? initializeApp({
+        credential: cert({
+          projectId: serverEnv.FIREBASE_PROJECT_ID,
+          clientEmail: serverEnv.FIREBASE_CLIENT_EMAIL,
+          privateKey: serverEnv.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
         }),
-    });
-}
+      })
+    : getApp();
 
-// Modules
-export const dbAdminAuth = admin.auth();
-export const dbAdminFirestore = admin.firestore();
+export const dbAdminAuth = getAuth(app);
+export const dbAdminFirestore = getFirestore(app);
 
-// Funcs
-export const Increment = (value: number) => admin.firestore.FieldValue.increment(value);
-export const NewItem = (item: any) => admin.firestore.FieldValue.arrayUnion(item);
+// Utils
+export const Increment = (value: number) => FieldValue.increment(value);
+export const NewItem = (item: any) => FieldValue.arrayUnion(item);

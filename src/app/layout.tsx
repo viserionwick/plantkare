@@ -45,8 +45,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const userSession = await getSessionData() as UserSession;  
-  console.log("userSession: ", userSession);
-  
   return (
     <html className={merriweather.className + " notranslate"} translate="no">
       <body>
