@@ -1,4 +1,7 @@
 .p-Plants {
+    display: flex;
+    flex-direction: column;
+
     .p-Plants--list {
         flex-wrap: wrap;
         gap: 10px;
@@ -19,5 +22,11 @@
                 flex: 1 1 100%;
             }
         }
+    }
+
+    .p-Plants--loadMore {
+        align-self: center;
+        font-size: 12px;
+        margin-top: 55px;
     }
 }

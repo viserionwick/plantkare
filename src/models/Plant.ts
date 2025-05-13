@@ -3,7 +3,7 @@
 import { Timestamp } from "@/types/timestamp";
 
 export interface Plant {
-    id: string;
+    id?: string;
     name: string;
     type: string;
     metadata: {
@@ -12,10 +12,8 @@ export interface Plant {
         createdAt: Timestamp
     }[]
     createdAt: Timestamp;
-    updatedAt: Timestamp;
 }
 
-// Login
 export interface NewPlant extends Pick<Plant,
     "name" |
     "type"

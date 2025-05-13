@@ -3,6 +3,9 @@
 // Essentials
 import { useState, useEffect } from "react";
 
+// Contexts
+import { useAuthContext } from "@/contexts/Auth";
+
 // Models
 import { NewPlant, NewPlantErrors } from "@/models/Plant";
 
@@ -12,16 +15,23 @@ import Button from "@/components/ui/Button/Button";
 import Form from "@/components/ui/Form/Form";
 import FormField from "@/components/ui/Form/FormField";
 import TextField from "@/components/ui/TextField/TextField";
+import axios from "axios";
 
 type Props = {
     open: DialogProps["open"];
     onOpenChange: DialogProps["onOpenChange"];
+    plantToUpdate?: NewPlant;
+    onSave: () => void;
 }
 
-const NewPlantDialog: React.FC<Props> = ({
+const PlantDialog: React.FC<Props> = ({
     open,
-    onOpenChange
+    onOpenChange,
+    plantToUpdate,
+    onSave,
 }) => {
+    const { getIdToken } = useAuthContext();
+
     // Reset form.
     useEffect(() => {
         setFormData(formDataDefault);
@@ -34,19 +44,18 @@ const NewPlantDialog: React.FC<Props> = ({
         weeklyWaterNeed: 0,
         expectedHumidity: 0
     }
-    const [formData, setFormData] = useState<NewPlant>(formDataDefault);
-
     const formDataErrorsDefault = {
         name: "",
         type: "",
         weeklyWaterNeed: "",
         expectedHumidity: ""
     }
+    const [formData, setFormData] = useState<NewPlant>(formDataDefault);
     const [formDataErrors, setFormDataErrors] = useState<NewPlantErrors>(formDataErrorsDefault);
+    const [saving, setSaving] = useState(false);
 
     const handleFormChange = (e: React.ChangeEvent<any>) => {
         const { name, value } = e.target;
-        console.log(name, value);
         setFormData({
             ...formData,
             [name]: value
@@ -83,7 +92,7 @@ const NewPlantDialog: React.FC<Props> = ({
         }
     }
 
-    const onSavePlant = (e: React.FormEvent<HTMLFormElement>) => {
+    const onSavePlant = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             if (!formData.name && !formData.type && formData.expectedHumidity === undefined && formData.weeklyWaterNeed === undefined) { // Check all inputs.
@@ -123,23 +132,18 @@ const NewPlantDialog: React.FC<Props> = ({
                     ...formDataErrors,
                     expectedHumidity: "outOfRange"
                 });
-            } else { // Valid form.                
-
+            } else { // Valid form.
+                setSaving(true);
+                const response = await axios.post("/api/plants/new", { idToken: await getIdToken(), formData });
+                if (response.status === 200) {
+                    setSaving(false);
+                    onOpenChange!(false);
+                    onSave();
+                }
             }
         } catch (error: any) {
-            /* if (error.headers?.key === "wrong") {
-                setLoginFormErrors({
-                    ...loginFormErrors,
-                    email: "wrong",
-                    password: "wrong",
-                    captchaToken: "needsRerender"
-                })
-            } else if (error.headers?.key === "checkCaptchaToken") {
-                setLoginFormErrors({
-                    ...loginFormErrors,
-                    captchaToken: "failed"
-                })
-            } */
+            setSaving(false);
+            console.log("ERROR: ", error);
         }
     }
 
@@ -153,8 +157,15 @@ const NewPlantDialog: React.FC<Props> = ({
                 <Button
                     key="approve"
                     onClick={onSavePlant}
+                    loading={saving}
+                    disabled={saving}
+                    keepSizeOnLoading
                 >
-                    Save
+                    {
+                        !plantToUpdate
+                            ? "Add"
+                            : "Update"
+                    }
                 </Button>
             ]}
             preventCloseOnButtons={[0]}
@@ -272,4 +283,4 @@ const NewPlantDialog: React.FC<Props> = ({
     );
 };
 
-export default NewPlantDialog;
+export default PlantDialog;
