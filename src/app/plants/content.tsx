@@ -17,7 +17,7 @@ interface PROPS {
   userSession: UserSession | "bot";
 }
 
-const CONTENT: NextPage<PROPS> = ({ userSession }) => {
+const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
   const [newPlant, setNewPlant] = useState(false);
 
   return (

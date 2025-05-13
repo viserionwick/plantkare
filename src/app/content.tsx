@@ -13,7 +13,7 @@ interface PROPS {
   userSession: UserSession | "bot";
 }
 
-const CONTENT: NextPage<PROPS> = ({ userSession }) => {
+const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
   return (
     <div className="p-Home">
       <Headline>Your Virtual Garden</Headline>
