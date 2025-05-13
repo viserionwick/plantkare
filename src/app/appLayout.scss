@@ -1,8 +1,8 @@
 @import "./content.scss";
+@import "./plants/content.scss";
 
 $menuPanelSize: 60px;
 $menuPanelSize_mobile: 55px;
-$recentSearchesPanelSize: 300px;
 
 .l-App {
     display: flex;
@@ -187,50 +187,6 @@ $recentSearchesPanelSize: 300px;
                         display: none;
                     }
                 }
-
-                .l-App--menu__discount {
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-                    font-size: 12px;
-                    border-radius: 999px;
-                    padding: 7px 20px;
-                    font-weight: 600;
-                    box-shadow: inset 0 0 0 1px var(--primaryButtonInverted);
-                    opacity: 1;
-
-                    @include TabletView {
-                        position: absolute;
-                        top: 15px;
-                        left: 81px;
-                        font-size: 11px;
-                        padding: 5px 15px;
-
-                        p {
-                            display: none;
-                        }
-                    }
-
-                    .c-CountDown {
-                        font-weight: 600;
-                        width: 52px;
-                    }
-                }
-
-                .l-App--menu__isPremium {
-                    color: var(--premiumAccountTagText);
-                    background: var(--premiumAccountTagBackground);
-                    border-radius: 999px;
-                    font-size: 11px;
-                    padding: 4px 10px;
-
-                    @include TabletView {
-                        position: absolute;
-                        top: 18px;
-                        left: 77px;
-                        font-size: 9px;
-                    }
-                }
             }
 
             .l-App--user {
@@ -241,7 +197,6 @@ $recentSearchesPanelSize: 300px;
                 @include TabletView {
                     width: 100%;
                     justify-content: center;
-                    /* height: 40px; */
                     flex-direction: column;
                     align-items: center;
                     margin-bottom: 7px;
@@ -275,124 +230,6 @@ $recentSearchesPanelSize: 300px;
 
         @include MobileView {
             margin-top: $menuPanelSize_mobile + 15px;
-        }
-
-        &:not(.noRecentSearches) {
-            padding: $menuPanelSize + 40px $recentSearchesPanelSize + 40px 40px 40px;
-        }
-    }
-
-    .l-App--recentSearches {
-        position: fixed;
-        right: 0;
-        width: $recentSearchesPanelSize;
-        height: calc(100vh - $menuPanelSize);
-        background: #ffffff;
-        margin-top: $menuPanelSize;
-        box-shadow: -4px 0 25px 0px rgba(black, .1);
-        padding: 25px 20px;
-        overflow: auto;
-
-        @include TabletView {
-            display: block;
-            left: 0;
-            right: 0;
-            width: unset;
-            height: unset;
-            top: 0;
-            bottom: 0;
-            margin-top: unset;
-            z-index: 100;
-
-            &.closed {
-                display: none;
-            }
-
-            .l-App--recentSearches--closeButton {
-                all: unset;
-                cursor: pointer;
-                display: flex !important;
-                justify-content: center;
-                align-items: center;
-                position: fixed;
-                right: 7vw;
-                width: 24px;
-                height: 24px;
-                z-index: 2;
-                font-size: 14px;
-                background: var(--primaryLowlight);
-                color: var(--primaryHighlight);
-                border-radius: 99px;
-            }
-        }
-
-        .l-App--recentSearches--closeButton {
-            display: none;
-        }
-
-        .l-App--recentSearches--headline {
-            font-size: 15px;
-            text-transform: uppercase;
-            color: var(--recentSearchesHeadline);
-            margin-bottom: 15px;
-            margin-left: 4px;
-        }
-
-        .l-App--recentSearches--accounts {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-
-            .l-App--recentSearches--account {
-                all: unset;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                width: 100%;
-                gap: 10px;
-                border-radius: 999px;
-                padding: 3px;
-
-                &:hover {
-                    text-decoration: none;
-                    background: var(--recentSearchesHover);
-
-                    .l-App--recentSearches--username {
-                        color: var(--primaryLowlight);
-                    }
-                }
-            }
-
-            .l-App--recentSearches--profilePicture {
-                width: 35px;
-                min-width: 35px;
-                height: 35px;
-                background: white;
-                border-radius: 99px;
-                overflow: hidden;
-            }
-
-            .l-App--recentSearches--username {
-                font-size: 14px;
-                color: var(--recentSearchesUsername);
-                width: 100%;
-                display: flex;
-                align-items: center;
-                min-width: 0;
-                gap: 6px;
-
-                >p {
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
-
-                >.c-Icon {
-                    color: var(--profileCardVerified);
-                    font-size: 15px;
-                }
-            }
         }
     }
 }

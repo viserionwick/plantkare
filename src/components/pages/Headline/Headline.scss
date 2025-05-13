@@ -1,0 +1,16 @@
+.c-Headline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 10px;
+    width: 100%;
+    font-size: 23px;
+    font-weight: 800;
+    min-height: 35px;
+    margin-bottom: 20px;
+
+    .c-Button {
+        font-size: 12px;
+    }
+}

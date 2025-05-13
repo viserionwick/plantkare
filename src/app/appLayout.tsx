@@ -13,7 +13,7 @@ import { useAuthContext } from "@/contexts/Auth";
 import Link from "@/components/ui/Link/Link";
 import Button from "@/components/ui/Button/Button";
 import Icon from "@/components/ui/Icon/Icon";
-import { X, List } from "@phosphor-icons/react";
+import { X, List, SignOut } from "@phosphor-icons/react";
 
 // Models
 import { UserSession } from "@/models/User";
@@ -85,13 +85,16 @@ const Layout: any = ({ children, userSession }: { children: ReactNode, userSessi
                         <Link className="l-App--menu__item" onClick={toggleMenu} activePath={pathname} href="/plants">
                             Plants
                         </Link>
+                        <Link className="l-App--menu__item" onClick={toggleMenu} activePath={pathname} href="/locations">
+                            Locations
+                        </Link>
                     </div>
                     <div className="l-App--user">
                         <Button
                             inline
                             onClick={logoutFunc}
                         >
-                            Log Out
+                            <SignOut />
                         </Button>
                     </div>
                 </div>

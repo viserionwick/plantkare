@@ -10,6 +10,11 @@
   --skeletonLoadingBackground: #d2d4d6;
   --skeletonLoadingShimmer: #ffffff;
 
+  // Header: Menu
+  --menuLink: #{rgba(color.adjust($primaryGreen, $lightness: -20%), .7)};
+  --menuLinkHover:  #{rgba(color.adjust($primaryGreen, $lightness: -20%), .8)};
+  --menuLinkActive: var(--primaryColor);
+
   // Components: Button: Primary
   --primaryButton: #{$primaryGreen};
   --primaryButtonText: #ffffff;
@@ -24,13 +29,17 @@
   // Components: Button: Regular
   --regularButton: #{$background};
 
+  // Components: Pages: PlantCard
+  --plantCardBackground: #dfd9c8;
+  --plantCardBorderRadius: 5px;
+
   // Components: Button: Nuances
   --mainButtonLight: #{rgba($primaryGreen, .5)};
   --buttonRadius: 7px;
   --buttonInverted: var(--primaryButton);
 
   // Components: Dialog
-  --dialogBackground: #{rgba(white, .7)};
+  --dialogBackground: #{rgba(white, .85)};
   --dialogShadowOverlay: transparent;
 
   // Components: Form: TextField
@@ -39,10 +48,5 @@
   --textFieldBackground: transparent;
   --textFieldIcon: #{rgba($primaryGreen, .5)};
   --textFieldPasswordRevealed: #{$primaryGreen};
-  --textFieldRadius: var(--buttonRadius);
-
-  // Header: Menu
-  --menuLink: #{rgba(color.adjust($primaryGreen, $lightness: -20%), .7)};
-  --menuLinkHover:  #{rgba(color.adjust($primaryGreen, $lightness: -20%), .8)};
-  --menuLinkActive: var(--primaryColor);
+  --textFieldRadius: var(--buttonRadius);  
 }

@@ -8,7 +8,7 @@ import * as RadixDialog from "@radix-ui/react-dialog";
 import Icon from "../Icon/Icon";
 import { X } from "@phosphor-icons/react";
 
-type DialogProps = {
+export type DialogProps = {
     children?: React.ReactNode;
     trigger?: React.ReactNode;
     defaultOpen?: boolean;

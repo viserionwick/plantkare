@@ -1,0 +1,110 @@
+.c-PlantCard {
+    width: 100%;
+    background: var(--plantCardBackground);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px 20px;
+    border-radius: var(--plantCardBorderRadius);
+
+    .c-PlantCard--name {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .c-PlantCard--type {
+        font-size: 15px;
+        font-weight: 300;
+        margin-bottom: 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .c-PlantCard--healthStatus {
+        margin-bottom: 15px;
+
+        span {
+            font-size: 15px;
+            color: gray;
+        }
+
+        .c-PlantCard--healthStatus__bar {
+            width: 100%;
+            height: 15px;
+            overflow: hidden;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            background: var(--primaryHighlight);
+            border-radius: 999px;
+            margin: 5px 0;
+
+            .c-PlantCard--healthStatus__bar--fill {
+                height: 100%;
+
+                &.healthy {
+                    background: var(--primaryColor);
+                }
+
+                &.moderate {
+                    background: orange;
+                }
+
+                &.danger {
+                    background: red;
+                }
+            }
+        }
+
+        .c-PlantCard--healthStatus__data {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+
+            &.healthy {
+                color: var(--primaryColor);
+            }
+
+            &.moderate {
+                color: orange;
+            }
+
+            &.danger {
+                color: red;
+            }
+        }
+    }
+
+    .c-PlantCard--data {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+
+        .c-PlantCard--data__weeklyWaterNeed,
+        .c-PlantCard--data__expectedHumidity {
+            display: flex;
+            justify-content: center;
+            color: gray;
+
+            .c-Icon {
+                font-size: 24px;
+                margin-right: 8px;
+            }
+
+            span {
+                color: var(--primaryLowlight);
+                margin-right: 2px;
+            }
+        }
+    }
+
+    .c-PlantCard--viewDetails {
+        font-size: 12px;
+    }
+}

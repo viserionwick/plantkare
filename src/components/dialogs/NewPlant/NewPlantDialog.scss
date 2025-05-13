@@ -1,0 +1,7 @@
+.d-NewPlant {
+    min-width: 510px;
+
+    @include TabletView {
+        min-width: unset;
+    }
+}

@@ -17,12 +17,8 @@
   left: 0;
   right: 0;
   background: var(--dialogShadowOverlay);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(10px);
   z-index: 998;
-
-  @include TabletView {
-    backdrop-filter: unset;
-  }
 }
 
 .c-Dialog {

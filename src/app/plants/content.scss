@@ -1,0 +1,23 @@
+.p-Plants {
+    .p-Plants--list {
+        flex-wrap: wrap;
+        gap: 10px;
+        display: flex;
+        justify-content: center;
+
+        .c-PlantCard {
+            max-width: 30%;
+            flex: 1 1 30%;
+
+            @include TabletView {
+                max-width: 48%;
+                flex: 1 1 50%;
+            }
+
+            @include MobileView {
+                max-width: 100%;
+                flex: 1 1 100%;
+            }
+        }
+    }
+}
