@@ -1,0 +1,65 @@
+@mixin RespondTo($size, $direction: "max") {
+  @if $direction == "max" {
+    @media (max-width: $size) {
+      @content;
+    }
+  } @else if $direction == "min" {
+    @media (min-width: $size) {
+      @content;
+    }
+  }
+}
+
+@mixin MobileView($direction: "max") {
+  @if $direction == "max" {
+    @media (max-width: 425px) {
+      @content;
+    }
+  } @else if $direction == "min" {
+    @media (min-width: 425px) {
+      @content;
+    }
+  }
+}
+
+@mixin TabletView($direction: "max") {
+  @if $direction == "max" {
+    @media (max-width: 768px) {
+      @content;
+    }
+  } @else if $direction == "min" {
+    @media (min-width: 768px) {
+      @content;
+    }
+  }
+}
+
+@mixin LaptopView($direction: "max") {
+  @if $direction == "max" {
+    @media (max-width: 1024px) {
+      @content;
+    }
+  } @else if $direction == "min" {
+    @media (min-width: 1024px) {
+      @content;
+    }
+  }
+}
+
+@mixin DesktopView($direction: "max") {
+  @if $direction == "max" {
+    @media (max-width: 1440px) {
+      @content;
+    }
+  } @else if $direction == "min" {
+    @media (min-width: 1440px) {
+      @content;
+    }
+  }
+}
+
+@mixin DesktopUpView {
+  @media (min-width: 1440px) {
+    @content;
+  }
+}

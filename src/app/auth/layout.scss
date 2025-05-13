@@ -1,0 +1,22 @@
+@import "./login/content.scss";
+@import "./signup/content.scss";
+
+.l-Auth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .l-Auth--hero {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin: 20px;
+  }
+
+  .l-Auth--content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}

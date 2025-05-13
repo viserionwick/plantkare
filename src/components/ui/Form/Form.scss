@@ -1,0 +1,41 @@
+.c-Form {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+
+  .c-Form--field {
+    display: flex;
+    flex-direction: column;
+
+    .c-Form--field--texts {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 var(--textFieldRadius);
+
+      .c-Form--field--headline {
+        color: var(--textFieldTitle);
+        font-size: 14px;
+        align-self: flex-end;
+      }
+
+      .c-Form--field--errors {
+        display: flex;
+        flex: 1;
+        text-align: right;
+        justify-content: flex-end;
+
+        .c-Form--field--error {
+          color: var(--primaryError);
+          font-size: 12px;
+        }
+      }
+    }
+
+    .c-Form--field--content {
+      .c-TextField, .c-TextArea {
+        width: 100%;
+      }
+    }
+  }
+}

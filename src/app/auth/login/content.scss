@@ -1,0 +1,75 @@
+.p-AuthLogin {
+  padding: 5px 40px 10px 40px;
+  width: 100%;
+  max-width: 500px;
+
+  @include TabletView {
+    padding: 5px 20px 10px 20px;
+  }
+
+  .p-AuthLogin--logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0
+  }
+
+  .p-AuthLogin--headline {
+    color: var(--primaryLowlight);
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 30px;
+  }
+
+  .p-AuthLogin--form {
+    gap: 17px;
+
+    .p-AuthLogin--form__forgotPassword {
+      float: right;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--primaryLowlight);
+      margin-top: 11px;
+    }
+
+    .p-AuthLogin--form__buttons {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+
+      .c-Button {
+        padding: 12px;
+        font-size: 14px;
+      }
+    }
+
+    .p-AuthLogin--captcha {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .p-AuthLogin--signupInstead {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+    gap: 5px;
+    margin-top: 21px;
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 13px;
+    text-align: center;
+    color: var(--primaryLowlight);
+
+    >a {
+      line-height: 18px;
+    }
+  }
+}
+
+.p-AuthLogin--form__forgotPassword--sent {
+  color: var(--primaryLowlight);
+  font-weight: 400;
+  text-align: center;
+}

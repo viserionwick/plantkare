@@ -1,0 +1,70 @@
+.c-TextField--wrapper {
+  position: relative;
+
+  .c-TextField {
+    all: unset;
+    width: 100%;
+    background: var(--textFieldBackground);
+    padding: 11px;
+    font-size: 13px;
+    color: var(--textFieldTitle);
+    box-shadow: 0 3px 0px 0px rgba(black, 0.1);
+    border-radius: var(--textFieldRadius);
+
+    &::placeholder {
+      color: var(--textFieldPlaceholder);
+    }
+
+    &.error {
+      box-shadow: 0 3px 0px 0px var(--primaryError)
+    }
+
+    &:focus {
+      border-color: var(--textFieldTitle);
+      color: var(--textFieldTitle);
+    }
+
+    &.withIcon {
+      padding-right: 39px;
+    }
+
+    &.withRevealablePassword {
+      padding-right: 39px;
+    }
+  }
+
+  .c-TextField--icon {
+    all: unset;
+    line-height: 0;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--textFieldIcon);
+
+    span {
+      font-size: 19px;
+    }
+  }
+
+  .c-TextField--revealPasswordButton {
+    all: unset;
+    cursor: pointer;
+    line-height: 10px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--textFieldIcon);
+
+    span {
+      font-size: 19px;
+    }
+
+    &.passwordRevealed {
+      span {
+        color: var(--textFieldPasswordRevealed);
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+:root {
+  // Essentials
+  --background: #{$background};
+  --foreground: #{$foreground};
+  --primaryColor: #{$primaryColor};
+  --primaryHighlight: #ffffff;
+  --primaryLowlight: #000000;
+  --primaryError: #{rgba(red, .6)};
+  --primaryRadius: 11px;
+  --skeletonLoadingBackground: #d2d4d6;
+  --skeletonLoadingShimmer: #ffffff;
+
+  // Components: Button: Primary
+  --primaryButton: #{$primaryGreen};
+  --primaryButtonText: #ffffff;
+  --primaryButtonDisabled: #{color.adjust($primaryGreen, $lightness: 30%)};
+  --primaryButtonHover: #{color.adjust($primaryGreen, $lightness: -5%)};
+  --primaryButtonInverted: var(--primaryButton);
+  --primaryButtonInvertedDisabled: #{color.adjust($primaryGreen, $lightness: 15%)};
+  --primaryButtonInvertedHover: #{color.adjust($primaryGreen, $lightness: 60%)};
+  --primaryButtonInline: var(--primaryButton);
+  --primaryButtonInlineInverted: var(--primaryButton);
+
+  // Components: Button: Regular
+  --regularButton: #{$background};
+
+  // Components: Button: Nuances
+  --mainButtonLight: #{rgba($primaryGreen, .5)};
+  --buttonRadius: 7px;
+  --buttonInverted: var(--primaryButton);
+
+  // Components: Dialog
+  --dialogBackground: #{rgba(white, .7)};
+  --dialogShadowOverlay: transparent;
+
+  // Components: Form: TextField
+  --textFieldTitle: --primaryLowlight;
+  --textFieldPlaceholder: #{rgba(black, .4)};
+  --textFieldBackground: transparent;
+  --textFieldIcon: #{rgba($primaryGreen, .5)};
+  --textFieldPasswordRevealed: #{$primaryGreen};
+  --textFieldRadius: var(--buttonRadius);
+}

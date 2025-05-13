@@ -1,0 +1,9 @@
+.c-LoadingIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    svg {
+        animation: spinLoadingIcon 1.2s linear infinite;
+    }
+}

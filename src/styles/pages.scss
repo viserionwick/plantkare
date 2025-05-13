@@ -1,0 +1,8 @@
+// Essentials: Not Found Page.
+@import "../app/not-found.scss";
+
+// PAGE: /:path*
+@import "../app/appLayout.scss";
+
+// PAGE: /auth/:path*
+@import "../app/auth/layout.scss";

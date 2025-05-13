@@ -1,0 +1,130 @@
+@keyframes moveIn {
+  0% {
+    top: 52%;
+    opacity: 0;
+  }
+
+  100% {
+    top: 50%;
+    opacity: 100%;
+  }
+}
+
+.c-Dialog--overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--dialogShadowOverlay);
+  backdrop-filter: blur(6px);
+  z-index: 998;
+
+  @include TabletView {
+    backdrop-filter: unset;
+  }
+}
+
+.c-Dialog {
+  background: var(--dialogBackground);
+  border-radius: var(--primaryRadius);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 450px;
+  max-height: 85vh;
+  z-index: 999;
+  animation: moveIn 200ms cubic-bezier(1, 0, 0, 1) forwards;
+  overflow-y: auto;
+  box-shadow: 0 4px 10px 0px rgba(black, 0.15);
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.disableCrop {
+    overflow: unset;
+  }
+
+  .c-Dialog--top {
+    position: relative;
+    display: flex;
+    justify-content: right;
+    padding: 16px 22px;
+    padding-bottom: 0;
+
+    .c-Dialog--title {
+      width: 100%;
+      font-size: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .c-Dialog--closeButton {
+      all: unset;
+      align-self: baseline;
+      font-size: 0;
+      cursor: pointer;
+      color: var(--primaryColor);
+      z-index: 1;
+
+      .c-Icon {
+        font-size: 25px;
+      }
+
+      &:hover {
+        color: color.adjust($primaryGreen, $lightness: 10%);
+      }
+    }
+  }
+
+  .c-Dialog--wrapper {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+
+    &.noTitle {
+      padding-top: 0;
+    }
+
+    .c-Dialog--content {
+      margin-bottom: 20px;
+      font-weight: 300;
+      font-size: 14px;
+    }
+
+    .c-Dialog--buttons {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: 100%;
+
+      &.rows {
+        flex-direction: column;
+        align-items: center;
+
+        .c-Button {
+          max-width: 245px;
+          width: 100%;
+        }
+      }
+
+      &.columns {
+        flex-direction: row;
+      }
+
+      .c-Button {
+        padding: 6px 10px;
+        font-size: 14px;
+        border-radius: 999px;
+      }
+    }
+  }
+}

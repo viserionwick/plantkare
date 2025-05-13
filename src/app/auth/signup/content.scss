@@ -1,0 +1,59 @@
+.p-AuthSignup {
+  padding: 5px 40px 10px 40px;
+  width: 100%;
+  max-width: 500px;
+
+  @include TabletView {
+    padding: 5px 20px 10px 20px;
+  }
+
+  .p-AuthSignup--logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+  }
+
+  .p-AuthSignup--headline {
+    color: var(--primaryLowlight);
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 30px;
+  }
+
+  .p-AuthSignup--form {
+    gap: 17px;
+
+    .p-AuthSignup--form__submit {
+      margin-top: 20px;
+    }
+
+    .c-Button {
+      padding: 12px;
+      font-size: 14px;
+    }
+
+    .p-AuthSignup--captcha {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .p-AuthSignup--loginInstead {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+    gap: 5px;
+    margin-top: 21px;
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 13px;
+    text-align: center;
+    color: var(--primaryLowlight);
+
+    >a {
+      line-height: 18px;
+    }
+  }
+}

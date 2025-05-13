@@ -1,0 +1,99 @@
+@use "sass:color";
+@import "./colors.scss";
+@import "./themes/themes.scss";
+@import "./responsive.scss";
+@import "./animations.scss";
+@import "./components.scss";
+@import "./pages.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
+  outline: none !important;
+  box-sizing: border-box !important;
+}
+
+body {
+  color: var(--foreground);
+  background-color: var(--background);
+}
+
+a {
+  all: unset;
+  position: relative;
+  display: inline-block;
+  color: var(--primaryColor);
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+  }
+}
+
+.l-Loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--background) !important;
+  z-index: 9999;
+
+  .l-Loading--content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .l-Loading--message {
+      position: absolute;
+      font-size: 14px;
+      bottom: 50px;
+      text-align: center;
+      margin: 0 20px;
+    }
+  }
+}
+
+.skeletonLoading span,
+.skeletonLoading.skeleton {
+  display: block;
+  position: relative;
+  background: var(--skeletonLoadingBackground);
+  overflow: hidden;
+
+  span {
+    display: block;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      display: flex;
+      position: absolute;
+      width: 40%;
+      height: 100%;
+      left: -40%;
+      background: linear-gradient(90deg, var(--skeletonLoadingBackground), var(--skeletonLoadingShimmer) 50% 50%, var(--skeletonLoadingBackground));
+      opacity: 70%;
+      animation: skeletonLoading 700ms ease-in-out infinite;
+    }
+  }
+
+  &::before {
+    content: "";
+    display: flex;
+    position: absolute;
+    width: 40%;
+    height: 100%;
+    left: -40%;
+    background: linear-gradient(90deg, var(--skeletonLoadingBackground), var(--skeletonLoadingShimmer) 50% 50%, var(--skeletonLoadingBackground));
+    opacity: 70%;
+    animation: skeletonLoading 700ms ease-in-out infinite;
+  }
+}
