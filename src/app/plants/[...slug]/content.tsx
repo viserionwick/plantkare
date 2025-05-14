@@ -29,6 +29,9 @@ import DatePicker from "@/components/ui/DatePicker/DatePicker";
 // Utils
 import formatTimestamp from "../../../utils/formatTimestamp";
 import fetchWeatherInfo from "@/utils/fetchWearherInfo";
+import Section from "@/components/pages/Section/Section";
+import SectionHeader from "@/components/pages/Section/SectionHeader";
+import SectionRow from "@/components/pages/Section/SectionRow";
 
 interface PROPS {
   userSession: UserSession | "bot";
@@ -162,38 +165,32 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
               content={"You can not undo plant data deletion. Are you ok with that?"}
             />
             <div className="p-Plant--sections">
-              <div className="p-Plant--section">
-                <div className="p-Plant--section__header">
-                  <h2>Plant Information</h2>
+              <Section>
+                <SectionHeader title="Plant Information">
                   <b>Details and metadata</b>
-                </div>
-                <div className="p-Plant--section__row">
-                  <b>Plant Type</b>
+                </SectionHeader>
+                <SectionRow title="Plant Type">
                   <p>{plant.type}</p>
-                </div>
-                <div className="p-Plant--section__row">
-                  <b>Water Need</b>
+                </SectionRow>
+                <SectionRow title="Water Need">
                   <p>
                     <Icon of={<Drop />} className="p-Plant--waterIcon" />
                     {plant.metadata[plant.metadata.length - 1].weeklyWaterNeed}ml per week
                   </p>
-                </div>
-                <div className="p-Plant--section__row">
-                  <b>Expected Humidity</b>
+                </SectionRow>
+                <SectionRow title="Expected Humidity">
                   <p>
                     <Icon of={<Leaf />} className="p-Plant--leafIcon" />
                     {plant.metadata[plant.metadata.length - 1].expectedHumidity}%
                   </p>
-                </div>
-                <div className="p-Plant--section__row">
-                  <b>Added On</b>
+                </SectionRow>
+                <SectionRow title="Added On">
                   <p>{formatTimestamp(plant.createdAt, "M/D/YYYY")}</p>
-                </div>
-                <div className="p-Plant--section__row">
-                  <b>Location</b>
+                </SectionRow>
+                <SectionRow title="Location">
                   <p>{plant.locationQuery}</p>
-                </div>
-                <div className="p-Plant--section__row--buttons">
+                </SectionRow>
+                <SectionRow isButtonsRow>
                   <Button
                     className="p-Plant--editButton"
                     onClick={setPlantUpdate}
@@ -209,19 +206,16 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
                     <Icon of={<TrashSimple />} />
                     Delete
                   </Button>
-                </div>
-              </div>
-              <div className="p-Plant--section">
-                <div className="p-Plant--section__header">
-                  <h2>Health Status</h2>
+                </SectionRow>
+              </Section>
+              <Section>
+                <SectionHeader title="Health Status">
                   <b>Current plant health</b>
-                </div>
-                <div className="p-Plant--section__row">
-                  <b>Current Health</b>
+                </SectionHeader>
+                <SectionRow title="Current Health">
                   <HealthBar percentage={plantStatus!.today.plantHealth.score} />
-                </div>
-                <div className="p-Plant--section__row">
-                  <b>Issues</b>
+                </SectionRow>
+                <SectionRow title="Issues">
                   {
                     !plantStatus!.today.plantHealth.issues.length
                       ? "No issues found."
@@ -229,16 +223,14 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
                         {issue}
                       </p>)
                   }
-                </div>
-                <div className="p-Plant--section__row">
-                  <b>Today's Weather</b>
-
+                </SectionRow>
+                <SectionRow title="Today's Weather">
                   Rain: {plantStatus!.today.weather.actualRainMl}ml - Humidity: {plantStatus!.today.weather.actualHumidty}%
-                </div>
-              </div>
+                </SectionRow>
+              </Section>
             </div>
-            <div className="p-Plant--section">
-              <div className="p-Plant--section__header spaceBetween">
+            <Section>
+              <SectionHeader isSpaceBetween>
                 <div>
                   <h2>Health History</h2>
                   <b>Health changes over time</b>
@@ -248,7 +240,7 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
                   startDate={moment().subtract(7, "days").toDate()}
                   endDate={moment().toDate()}
                 />
-              </div>
+              </SectionHeader>
               <ResponsiveContainer className="p-Plant--healthHistoryChart">
                 <LineChart data={plantHistory!}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -261,7 +253,7 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
                   <Line type="monotone" dataKey="score" name="Health Percentage" stroke="var(--primaryColor)" />
                 </LineChart>
               </ResponsiveContainer>
-            </div>
+            </Section>
           </>
       }
     </div>

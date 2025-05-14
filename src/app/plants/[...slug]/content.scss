@@ -8,7 +8,7 @@
         gap: $allSectionsGap;
         margin-bottom: $allSectionsGap;
 
-        .p-Plant--section {
+        .c-Section {
             max-width: 100%;
             min-width: 290px;
             flex: calc(50% - $allSectionsGap);
@@ -21,7 +21,7 @@
         }
     }
 
-    .p-Plant--section {
+    /* .p-Plant--section {
         display: flex;
         flex-direction: column;
         border: 1px solid #c7c1b0;
@@ -88,7 +88,7 @@
                 padding: 7px 10px;
             }
         }
-    }
+    } */
 
     .p-Plant--waterIcon,
     .p-Plant--leafIcon {
