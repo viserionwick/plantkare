@@ -6,6 +6,7 @@ import { PlantHealthHistory } from "@/utils/calc/generatePlantHealthHistory";
 
 export interface Plant {
     id?: string;
+    plantHealthToday?: PlantHealthResult;
     name: string;
     type: string;
     metadata: {

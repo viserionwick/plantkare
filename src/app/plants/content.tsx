@@ -97,7 +97,7 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
                 type={plant.type}
                 expectedHumidity={plant.metadata[plant.metadata.length - 1].expectedHumidity}
                 weeklyWaterNeed={plant.metadata[plant.metadata.length - 1].weeklyWaterNeed}
-                healthPercentage={80}
+                healthPercentage={plant.plantHealthToday?.score || 0}
               />
             ))
             : plantsLoading

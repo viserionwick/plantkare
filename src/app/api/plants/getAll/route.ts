@@ -10,6 +10,9 @@ import { nextErrorReturner } from "@/utils/error/errorReturner";
 
 // Models
 import { Plant } from "@/models/Plant";
+import fetchWeatherInfo from "@/utils/fetchWearherInfo";
+import moment from "moment-timezone";
+import evaluatePlantHealth from "@/utils/calc/evaluatePlantHealth";
 
 interface BODY {
     idToken: string;
@@ -58,11 +61,42 @@ export async function POST(req: NextRequest) {
             ...doc.data()
         })) as Plant[];
 
+        const plantsWithStatus = await Promise.all(
+            plants.map(async (plant) => {
+                console.log(plant);
+
+                const weatherData = await fetchWeatherInfo(
+                    {
+                        startDate: moment().format("YYYY-MM-DD"),
+                        endDate: moment().format("YYYY-MM-DD")
+                    },
+                    {
+                        latitude: "37.7749",
+                        longitude: "-122.4194"
+                    }
+                );
+
+                const plantHealthToday = evaluatePlantHealth(
+                    weatherData.actualRainMm[0],
+                    weatherData.actualHumidity[0],
+                    {
+                        weeklyWaterMl: plant.metadata[plant.metadata.length - 1].weeklyWaterNeed,
+                        expectedHumidity: plant.metadata[plant.metadata.length - 1].expectedHumidity,
+                    }
+                );
+
+                return {
+                    plantHealthToday,
+                    ...plant
+                };
+            })
+        );
+        
         const lastDoc = trimmedDocs[trimmedDocs.length - 1];
         const newNextCursor = lastDoc?.get("createdAt") ?? null;
 
         return NextResponse.json({
-            plants,
+            plants: plantsWithStatus,
             totalPlantsAmount,
             nextCursor: newNextCursor,
             hasMore,
