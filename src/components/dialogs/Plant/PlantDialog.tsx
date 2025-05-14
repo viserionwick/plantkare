@@ -92,7 +92,7 @@ const PlantDialog: React.FC<Props> = ({
         }
     }
 
-    const onSavePlant = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSavePlant = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             if (!formData.name && !formData.type && formData.expectedHumidity === undefined && formData.weeklyWaterNeed === undefined) { // Check all inputs.
@@ -156,7 +156,7 @@ const PlantDialog: React.FC<Props> = ({
             buttons={[
                 <Button
                     key="approve"
-                    onClick={onSavePlant}
+                    onClick={handleSavePlant}
                     loading={saving}
                     disabled={saving}
                     keepSizeOnLoading
@@ -171,7 +171,7 @@ const PlantDialog: React.FC<Props> = ({
             preventCloseOnButtons={[0]}
             buttonsStyle="rows"
         >
-            <Form className="p-AuthLogin--form" onSubmit={onSavePlant}>
+            <Form className="p-AuthLogin--form" onSubmit={handleSavePlant}>
                 <FormField
                     name="name"
                     headline="Plant Name"
