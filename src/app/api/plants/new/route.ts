@@ -32,8 +32,8 @@ export async function POST(req: NextRequest) {
             name: formData.name,
             type: formData.type,
             metadata: [{
-                weeklyWaterNeed: formData.weeklyWaterNeed,
-                expectedHumidity: formData.expectedHumidity,
+                weeklyWaterNeed: Number(formData.weeklyWaterNeed),
+                expectedHumidity: Number(formData.expectedHumidity),
                 createdAt: Timestamp.now()
             }],
             createdAt: Timestamp.now()

@@ -5,6 +5,7 @@
 import Button from "@/components/ui/Button/Button";
 import Icon from "@/components/ui/Icon/Icon";
 import { Drop, Leaf } from "@phosphor-icons/react";
+import HealthBar from "../HealthBar/HealthBar";
 
 type PlantCardProps = {
     className?: string;
@@ -25,13 +26,6 @@ const PlantCard: React.FC<PlantCardProps> = ({
     expectedHumidity,
     healthPercentage
 }) => {
-    const healthDisplay =
-        healthPercentage < 40
-            ? "danger"
-            : healthPercentage > 60
-                ? "healthy"
-                : "moderate"
-
     return (
         <div
             className={`
@@ -47,28 +41,7 @@ const PlantCard: React.FC<PlantCardProps> = ({
             </div>
             <div className="c-PlantCard--healthStatus">
                 <span>Health Status</span>
-                <div className="c-PlantCard--healthStatus__bar">
-                    <div
-                        className={`
-                            c-PlantCard--healthStatus__bar--fill
-                            ${healthDisplay}
-                        `}
-                        style={{ width: `${healthPercentage}%` }}
-                    />
-                </div>
-                <div
-                    className={`
-                        c-PlantCard--healthStatus__data
-                        ${healthDisplay}
-                    `}
-                >
-                    <div className="c-PlantCard--healthStatus__data__current">
-                        {healthDisplay}
-                    </div>
-                    <div className="c-PlantCard--healthStatus__data__percentage">
-                        {healthPercentage}%
-                    </div>
-                </div>
+                <HealthBar percentage={healthPercentage} />
             </div>
             <div className="c-PlantCard--data">
                 <div className="c-PlantCard--data__weeklyWaterNeed">

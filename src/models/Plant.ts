@@ -1,6 +1,8 @@
 // Models
 
 import { Timestamp } from "@/types/timestamp";
+import { PlantHealthResult } from "@/utils/calc/evaluatePlantHealth";
+import { PlantHealthHistory } from "@/utils/calc/generatePlantHealthHistory";
 
 export interface Plant {
     id?: string;
@@ -28,4 +30,17 @@ export type NewPlantErrors = {
 
 export interface UpdatePlant extends NewPlant {
     plantID: string;
+};
+
+export interface PlantStatus {
+    today: {
+        plantHealth: PlantHealthResult,
+        weather: {
+            actualRainMl: number
+            actualHumidty: number
+        }
+    },
+    thisWeek: {
+        plantHealth: PlantHealthHistory
+    }
 };

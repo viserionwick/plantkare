@@ -95,12 +95,14 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
                 id={plant.id!}
                 name={plant.name}
                 type={plant.type}
-                expectedHumidity={plant.metadata[0].expectedHumidity}
-                weeklyWaterNeed={plant.metadata[0].weeklyWaterNeed}
+                expectedHumidity={plant.metadata[plant.metadata.length - 1].expectedHumidity}
+                weeklyWaterNeed={plant.metadata[plant.metadata.length - 1].weeklyWaterNeed}
                 healthPercentage={80}
               />
             ))
-            : "Loading..."
+            : plantsLoading
+              ? "Loading..."
+              : "Add a plant first! Plants will be displayed here."
         }
       </div>
       {

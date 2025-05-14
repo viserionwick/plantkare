@@ -31,6 +31,7 @@
 
         .p-Plant--section__header {
             margin-bottom: 10px;
+
             h2 {
                 font-size: 22px;
                 font-weight: 600;
@@ -42,6 +43,11 @@
                 font-weight: 500;
                 opacity: 0.7;
                 color: var(--primaryLowlight);
+            }
+
+            &.spaceBetween {
+                display: flex;
+                justify-content: space-between;
             }
         }
 
@@ -95,5 +101,21 @@
 
     .p-Plant--leafIcon {
         color: var(--primaryGreen);
+    }
+
+    .p-Plant--healthHistoryChart {
+        height: 300px !important;
+    }
+
+    .p-Plant--healthHistoryChart__tooltip {
+        background: var(--background);
+        border: 1px solid var(--primaryColor);
+        padding: 7px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+
+        b {
+            font-weight: 600;
+        }
     }
 }

@@ -3,14 +3,18 @@
 // Essentials
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
+import { useRouter } from "next/navigation";
 import axios from "axios";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import moment from "moment-timezone";
 
 // Contexts
 import { useAuthContext } from "@/contexts/Auth";
 
 // Models
-import { Plant } from "@/models/Plant";
+import { Plant, PlantStatus } from "@/models/Plant";
 import { UserSession } from "@/models/User";
+import { PlantHealthHistory, generatePlantHealthHistory } from "@/utils/calc/generatePlantHealthHistory";
 
 // Components
 import Headline from "@/components/pages/Headline/Headline";
@@ -18,12 +22,13 @@ import Button from "@/components/ui/Button/Button";
 import Icon from "@/components/ui/Icon/Icon";
 import { ArrowLeft, Drop, Leaf, PencilSimple, TrashSimple } from "@phosphor-icons/react";
 import PlantDialog from "@/components/dialogs/Plant/PlantDialog";
-import { PROPS as PlantDialogProps } from "@/components/dialogs/Plant/PlantDialog";
+import VerifyDialog from "@/components/dialogs/Verify/VerifyDialog";
+import HealthBar from "@/components/pages/HealthBar/HealthBar";
+import DatePicker from "@/components/ui/DatePicker/DatePicker";
 
 // Utils
 import formatTimestamp from "../../../utils/formatTimestamp";
-import VerifyDialog from "@/components/dialogs/Verify/VerifyDialog";
-import { useRouter } from "next/navigation";
+import fetchWeatherInfo from "@/utils/fetchWearherInfo";
 
 interface PROPS {
   userSession: UserSession | "bot";
@@ -39,6 +44,12 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
   const [plantUpdate, setPlantUpdate] = useState(false);
   const [plantDelete, setPlantDelete] = useState(false);
   const [plantDeleting, setPlantDeleting] = useState(false);
+  const [plantStatus, setPlantStatus] = useState<PlantStatus | null>(null);
+  const [plantHistory, setPlantHistory] = useState<PlantHealthHistory | null>(null);
+
+  useEffect(() => {
+    if (currentUser) onFetchPlant();
+  }, [currentUser]);
 
   const onFetchPlant = async () => {
     try {
@@ -49,10 +60,14 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
       });
       if (response.status === 200) {
         const fetchedPlant = response.data.plant;
+        const fetchedPlantStatus = response.data.status;
+        const fetchedPlantHistory = response.data.status.thisWeek.plantHealth;
+        console.log("fetchedPlantStatus: ", fetchedPlantStatus);
 
         setPlant(fetchedPlant);
         setPlantLoading(false);
-        console.log("fetchedPlant: ", fetchedPlant);
+        setPlantStatus(fetchedPlantStatus);
+        setPlantHistory(fetchedPlantHistory);
       }
     } catch (error: any) {
       setPlantLoading(false);
@@ -76,9 +91,41 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
     }
   }
 
-  useEffect(() => {
-    if (currentUser) onFetchPlant();
-  }, [currentUser]);
+  const onFetchPlantHistory = async (dates: { startDate: Date, endDate: Date }) => {
+    const weatherData = await fetchWeatherInfo(
+      {
+        startDate: moment(dates.startDate).format("YYYY-MM-DD"),
+        endDate: moment(dates.endDate).format("YYYY-MM-DD")
+      },
+      {
+        latitude: "37.7749",
+        longitude: "-122.4194"
+      }
+    );
+
+    const newPlantHistory = generatePlantHealthHistory(plant!, weatherData);
+    setPlantHistory(newPlantHistory);
+  }
+
+  const formatHistoryTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const issues = payload[0].payload.issues as string[];
+      const score = payload[0].payload.score;
+
+      return (
+        <div className="p-Plant--healthHistoryChart__tooltip">
+          <b>{label}</b>
+          <p>Health: <b>{score}%</b></p>
+          {
+            !issues.length ? <></> :
+              <p>Issues: <b>{issues.join(", ")}</b></p>
+          }
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className="p-Plant">
@@ -165,11 +212,22 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
                 </div>
                 <div className="p-Plant--section__row">
                   <b>Current Health</b>
-                  <p>90%</p>
+                  <HealthBar percentage={plantStatus!.today.plantHealth.score} />
                 </div>
                 <div className="p-Plant--section__row">
-                  <b>Latest Readings</b>
-                  Water 345 ml - Humidity 59%
+                  <b>Issues</b>
+                  {
+                    !plantStatus!.today.plantHealth.issues.length
+                      ? "No issues found."
+                      : plantStatus!.today.plantHealth.issues.map((issue, i) => <p key={i}>
+                        {issue}
+                      </p>)
+                  }
+                </div>
+                <div className="p-Plant--section__row">
+                  <b>Today's Weather</b>
+
+                  Rain: {plantStatus!.today.weather.actualRainMl}ml - Humidity: {plantStatus!.today.weather.actualHumidty}%
                 </div>
               </div>
             </div>
@@ -177,10 +235,26 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
               <div className="p-Plant--section__header spaceBetween">
                 <div>
                   <h2>Health History</h2>
-                  <b>Track changes over time</b>
+                  <b>Health changes over time</b>
                 </div>
-                <button>Select Range</button>
+                <DatePicker
+                  onDateChange={onFetchPlantHistory}
+                  startDate={moment().subtract(7, "days").toDate()}
+                  endDate={moment().toDate()}
+                />
               </div>
+              <ResponsiveContainer className="p-Plant--healthHistoryChart">
+                <LineChart data={plantHistory!}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis />
+                  <Tooltip
+                    content={formatHistoryTooltip}
+                  />
+                  <Legend />
+                  <Line type="monotone" dataKey="score" name="Health Percentage" stroke="var(--primaryColor)" />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
           </>
       }

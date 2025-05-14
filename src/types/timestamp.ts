@@ -2,4 +2,7 @@
 import { Timestamp as TimestampFirestore } from "firebase/firestore";
 import { Timestamp as TimestampAdmin } from "firebase-admin/firestore";
 
-export type Timestamp = TimestampFirestore | TimestampAdmin;
+export type Timestamp = TimestampFirestore | TimestampAdmin | {
+    _seconds: number;
+    _nanoseconds: number;
+};

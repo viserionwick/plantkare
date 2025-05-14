@@ -13,10 +13,12 @@
   // Colors
   --primaryGreen: #{$primaryGreen};
   --primaryBlue: #{$primaryBlue};
+  --primaryOrange: #{$primaryOrange};
+  --primaryRed: #{$primaryRed};
 
   // Header: Menu
   --menuLink: #{rgba(color.adjust($primaryGreen, $lightness: -20%), .7)};
-  --menuLinkHover:  #{rgba(color.adjust($primaryGreen, $lightness: -20%), .8)};
+  --menuLinkHover: #{rgba(color.adjust($primaryGreen, $lightness: -20%), .8)};
   --menuLinkActive: var(--primaryColor);
 
   // Components: Button: Primary
@@ -41,6 +43,12 @@
   --plantCardBackground: #dfd9c8;
   --plantCardBorderRadius: 5px;
 
+  // Components: Pages: HealthBar
+  --healthBarBackground: #{color.adjust($background, $lightness: -5%)};;
+  --healthBarHealthy: var(--primaryGreen);
+  --healthBarModerate: var(--primaryOrange);
+  --healthBarDanger: var(--primaryRed);
+
   // Components: Button: Nuances
   --mainButtonLight: #{rgba($primaryGreen, .5)};
   --buttonRadius: 7px;
@@ -56,5 +64,5 @@
   --textFieldBackground: transparent;
   --textFieldIcon: #{rgba($primaryGreen, .5)};
   --textFieldPasswordRevealed: #{$primaryGreen};
-  --textFieldRadius: var(--buttonRadius);  
+  --textFieldRadius: var(--buttonRadius);
 }
