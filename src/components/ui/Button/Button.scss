@@ -158,6 +158,10 @@
   // STYLES: Red
   &.red {
     background: var(--redButton);
+
+    &:hover {
+      background: var(--redButtonHover);
+    }
   }
 
   &.red.inline {

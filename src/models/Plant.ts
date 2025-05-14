@@ -25,3 +25,7 @@ export interface NewPlant extends Pick<Plant,
 export type NewPlantErrors = {
     [K in keyof NewPlant]: string;
 };
+
+export interface UpdatePlant extends NewPlant {
+    plantID: string;
+};

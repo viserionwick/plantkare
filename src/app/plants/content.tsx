@@ -24,7 +24,7 @@ interface PROPS {
 }
 
 const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
-  const { getIdToken } = useAuthContext();
+  const { getIdToken, currentUser } = useAuthContext();
 
   const [plants, setPlants] = useState<Plant[]>([]);
   const [plantsTotalAmount, setPlantsTotalAmount] = useState(0);
@@ -63,8 +63,6 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
 
         setPlantsLoading(false);
         setPlantsMoreLoading(false);
-
-        console.log("response.data:", response.data);
       }
     } catch (error: any) {
 
@@ -72,8 +70,8 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
   }
 
   useEffect(() => {
-    onFetchPlants();
-  }, []);
+    if (currentUser) onFetchPlants();
+  }, [currentUser]);
 
   return (
     <div className="p-Plants">
@@ -85,7 +83,7 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
         <PlantDialog
           open={newPlant}
           onOpenChange={setNewPlant}
-          onSave={onFetchPlants}
+          onSave={() => onFetchPlants()}
         />
       </Headline>
       <div className="p-Plants--list">

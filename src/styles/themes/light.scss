@@ -10,6 +10,10 @@
   --skeletonLoadingBackground: #d2d4d6;
   --skeletonLoadingShimmer: #ffffff;
 
+  // Colors
+  --primaryGreen: #{$primaryGreen};
+  --primaryBlue: #{$primaryBlue};
+
   // Header: Menu
   --menuLink: #{rgba(color.adjust($primaryGreen, $lightness: -20%), .7)};
   --menuLinkHover:  #{rgba(color.adjust($primaryGreen, $lightness: -20%), .8)};
@@ -25,6 +29,10 @@
   --primaryButtonInvertedHover: #{color.adjust($primaryGreen, $lightness: 60%)};
   --primaryButtonInline: var(--primaryButton);
   --primaryButtonInlineInverted: var(--primaryButton);
+
+  // Components: Button: Styles
+  --redButton: #693f3f;
+  --redButtonHover: #4e3131;
 
   // Components: Button: Regular
   --regularButton: #{$background};

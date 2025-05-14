@@ -18,10 +18,18 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-const ROOT = async () => {
-  const isBot = await checkBot();
-  const userSession = await getSessionData() as UserSession;
-  return <CONTENT userSession={isBot ? "bot" : userSession!} />
+type PROPS = {
+  params: Promise<{ slug: string }>
 }
 
-export default ROOT;
+const PAGE = async ({ params }: PROPS) => {
+  const { slug } = await params;
+  const isBot = await checkBot();
+  const userSession = await getSessionData() as UserSession;  
+  return <CONTENT
+    userSession={isBot ? "bot" : userSession!}
+    slug={slug[0]}
+  />
+}
+
+export default PAGE;

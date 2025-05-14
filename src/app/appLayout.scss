@@ -1,5 +1,6 @@
 @import "./content.scss";
 @import "./plants/content.scss";
+@import "./plants/[...slug]/content.scss";
 
 $menuPanelSize: 60px;
 $menuPanelSize_mobile: 55px;

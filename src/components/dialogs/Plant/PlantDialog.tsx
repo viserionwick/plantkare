@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useAuthContext } from "@/contexts/Auth";
 
 // Models
-import { NewPlant, NewPlantErrors } from "@/models/Plant";
+import { NewPlant, NewPlantErrors, Plant, UpdatePlant } from "@/models/Plant";
 
 // Components
 import Dialog, { DialogProps } from "@/components/ui/Dialog/Dialog";
@@ -17,14 +17,14 @@ import FormField from "@/components/ui/Form/FormField";
 import TextField from "@/components/ui/TextField/TextField";
 import axios from "axios";
 
-type Props = {
+export type PROPS = {
     open: DialogProps["open"];
     onOpenChange: DialogProps["onOpenChange"];
-    plantToUpdate?: NewPlant;
-    onSave: () => void;
+    plantToUpdate?: UpdatePlant;
+    onSave: (plant?: Plant) => void;
 }
 
-const PlantDialog: React.FC<Props> = ({
+const PlantDialog: React.FC<PROPS> = ({
     open,
     onOpenChange,
     plantToUpdate,
@@ -34,7 +34,7 @@ const PlantDialog: React.FC<Props> = ({
 
     // Reset form.
     useEffect(() => {
-        setFormData(formDataDefault);
+        setFormData(plantToUpdate || formDataDefault);
         setFormDataErrors(formDataErrorsDefault);
     }, [open]);
 
@@ -50,7 +50,8 @@ const PlantDialog: React.FC<Props> = ({
         weeklyWaterNeed: "",
         expectedHumidity: ""
     }
-    const [formData, setFormData] = useState<NewPlant>(formDataDefault);
+
+    const [formData, setFormData] = useState<NewPlant>(plantToUpdate || formDataDefault);
     const [formDataErrors, setFormDataErrors] = useState<NewPlantErrors>(formDataErrorsDefault);
     const [saving, setSaving] = useState(false);
 
@@ -134,7 +135,15 @@ const PlantDialog: React.FC<Props> = ({
                 });
             } else { // Valid form.
                 setSaving(true);
-                const response = await axios.post("/api/plants/new", { idToken: await getIdToken(), formData });
+                const response = await axios.post(
+                    plantToUpdate
+                        ? "/api/plants/update"
+                        : "/api/plants/new",
+                    {
+                        idToken: await getIdToken(),
+                        formData,
+                        plantID: plantToUpdate?.plantID
+                    });
                 if (response.status === 200) {
                     setSaving(false);
                     onOpenChange!(false);
@@ -149,7 +158,11 @@ const PlantDialog: React.FC<Props> = ({
 
     return (
         <Dialog
-            title="Add New Plant"
+            title={
+                plantToUpdate
+                    ? "Update Plant"
+                    : "Add New Plant"
+            }
             className="d-NewPlant"
             open={open}
             onOpenChange={onOpenChange}
