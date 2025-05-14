@@ -15,11 +15,17 @@ export interface Plant {
         createdAt: Timestamp
     }[]
     createdAt: Timestamp;
+    locationQuery: string;
+    location: {
+        latitude: string,
+        longitude: string
+    }
 }
 
 export interface NewPlant extends Pick<Plant,
     "name" |
-    "type"
+    "type" |
+    "locationQuery"
 > {
     weeklyWaterNeed: number;
     expectedHumidity: number;

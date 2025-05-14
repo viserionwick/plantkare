@@ -10,6 +10,7 @@ import { nextErrorReturner } from "@/utils/error/errorReturner";
 
 // Models
 import { NewPlant } from "@/models/Plant";
+import fetchGeocode from "@/utils/fetchGeocode";
 
 interface BODY {
     idToken: string;
@@ -30,6 +31,8 @@ export async function POST(req: NextRequest) {
         const decodedToken = await dbAdminAuth.verifyIdToken(idToken);
         const userPlantsRef = dbAdminFirestore.collection("users").doc(decodedToken.uid).collection("plants").doc(plantID);
 
+        const { latitude, longitude } = await fetchGeocode(formData.locationQuery);
+
         await userPlantsRef.update({
             "name": formData.name,
             "type": formData.type,
@@ -37,7 +40,10 @@ export async function POST(req: NextRequest) {
                 weeklyWaterNeed: Number(formData.weeklyWaterNeed),
                 expectedHumidity: Number(formData.expectedHumidity),
                 createdAt: Timestamp.now()
-            })
+            }),
+            "locationQuery": formData.locationQuery,
+            "location.latitude": latitude,
+            "location.longitude": longitude,
         });
 
         return NextResponse.json({ success: "Success" }, { status: 200 });

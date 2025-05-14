@@ -7,6 +7,7 @@ import { dbAdminAuth, dbAdminFirestore } from "../../fbAdmin";
 
 // Utils
 import { nextErrorReturner } from "@/utils/error/errorReturner";
+import fetchGeocode from "@/utils/fetchGeocode";
 
 // Models
 import { NewPlant, Plant } from "@/models/Plant";
@@ -28,6 +29,8 @@ export async function POST(req: NextRequest) {
         const decodedToken = await dbAdminAuth.verifyIdToken(idToken);
         const userPlantsRef = dbAdminFirestore.collection("users").doc(decodedToken.uid).collection("plants");
 
+        const { latitude, longitude } = await fetchGeocode(formData.locationQuery);
+
         const newPlant: Plant = {
             name: formData.name,
             type: formData.type,
@@ -36,7 +39,12 @@ export async function POST(req: NextRequest) {
                 expectedHumidity: Number(formData.expectedHumidity),
                 createdAt: Timestamp.now()
             }],
-            createdAt: Timestamp.now()
+            createdAt: Timestamp.now(),
+            locationQuery: formData.locationQuery,
+            location: {
+                latitude,
+                longitude
+            }
         };
 
         await userPlantsRef.add(newPlant);

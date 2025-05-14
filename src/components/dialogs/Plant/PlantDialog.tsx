@@ -42,13 +42,15 @@ const PlantDialog: React.FC<PROPS> = ({
         name: "",
         type: "",
         weeklyWaterNeed: 0,
-        expectedHumidity: 0
+        expectedHumidity: 0,
+        locationQuery: ""
     }
     const formDataErrorsDefault = {
         name: "",
         type: "",
         weeklyWaterNeed: "",
-        expectedHumidity: ""
+        expectedHumidity: "",
+        locationQuery: ""
     }
 
     const [formData, setFormData] = useState<NewPlant>(plantToUpdate || formDataDefault);
@@ -87,6 +89,12 @@ const PlantDialog: React.FC<PROPS> = ({
                     expectedHumidity: "",
                 });
                 break;
+            case "locationQuery":
+                setFormDataErrors({
+                    ...formDataErrors,
+                    locationQuery: "",
+                });
+                break;
             default:
                 setFormDataErrors(formDataErrorsDefault);
                 break;
@@ -101,7 +109,8 @@ const PlantDialog: React.FC<PROPS> = ({
                     name: "missing",
                     type: "missing",
                     weeklyWaterNeed: "missing",
-                    expectedHumidity: "missing"
+                    expectedHumidity: "missing",
+                    locationQuery: "missing"
                 });
             } else if (!formData.name) { // Check plant name.
                 setFormDataErrors({
@@ -132,6 +141,11 @@ const PlantDialog: React.FC<PROPS> = ({
                 setFormDataErrors({
                     ...formDataErrors,
                     expectedHumidity: "outOfRange"
+                });
+            } else if (!formData.locationQuery) { // Check location query.
+                setFormDataErrors({
+                    ...formDataErrors,
+                    locationQuery: "missing"
                 });
             } else { // Valid form.
                 setSaving(true);
@@ -234,7 +248,7 @@ const PlantDialog: React.FC<PROPS> = ({
                     />
                 </FormField>
                 <FormField
-                    name="type"
+                    name="weeklyWaterNeed"
                     headline="Weekly Water Need (ml)"
                     errors={[
                         {
@@ -263,7 +277,7 @@ const PlantDialog: React.FC<PROPS> = ({
                     />
                 </FormField>
                 <FormField
-                    name="type"
+                    name="expectedHumidity"
                     headline="Expected Relative Humidity (%)"
                     errors={[
                         {
@@ -286,6 +300,30 @@ const PlantDialog: React.FC<PROPS> = ({
                         onChange={handleFormChange}
                         className={
                             formDataErrors.expectedHumidity
+                                ? "error"
+                                : ""
+                        }
+                    />
+                </FormField>
+                <FormField
+                    name="locationQuery"
+                    headline="Location Address (350 5th Ave, New York, NY 10118)"
+                    errors={[
+                        {
+                            match: "valueMissing",
+                            forceMatch: formDataErrors.locationQuery === "missing",
+                            message: "Please enter a location."
+                        }
+                    ]}
+                >
+                    <TextField
+                        name="locationQuery"
+                        type="text"
+                        required
+                        value={formData.locationQuery}
+                        onChange={handleFormChange}
+                        className={
+                            formDataErrors.locationQuery
                                 ? "error"
                                 : ""
                         }

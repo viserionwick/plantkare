@@ -92,19 +92,21 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
   }
 
   const onFetchPlantHistory = async (dates: { startDate: Date, endDate: Date }) => {
-    const weatherData = await fetchWeatherInfo(
-      {
-        startDate: moment(dates.startDate).format("YYYY-MM-DD"),
-        endDate: moment(dates.endDate).format("YYYY-MM-DD")
-      },
-      {
-        latitude: "37.7749",
-        longitude: "-122.4194"
-      }
-    );
+    if (plant) {
+      const weatherData = await fetchWeatherInfo(
+        {
+          startDate: moment(dates.startDate).format("YYYY-MM-DD"),
+          endDate: moment(dates.endDate).format("YYYY-MM-DD")
+        },
+        {
+          latitude: plant.location.latitude,
+          longitude: plant.location.longitude
+        }
+      );
 
-    const newPlantHistory = generatePlantHealthHistory(plant!, weatherData);
-    setPlantHistory(newPlantHistory);
+      const newPlantHistory = generatePlantHealthHistory(plant!, weatherData);
+      setPlantHistory(newPlantHistory);
+    }
   }
 
   const formatHistoryTooltip = ({ active, payload, label }: any) => {
@@ -146,7 +148,8 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
                 name: plant.name,
                 type: plant.type,
                 weeklyWaterNeed: plant.metadata[plant.metadata.length - 1].weeklyWaterNeed,
-                expectedHumidity: plant.metadata[plant.metadata.length - 1].expectedHumidity
+                expectedHumidity: plant.metadata[plant.metadata.length - 1].expectedHumidity,
+                locationQuery: plant.locationQuery
               }}
               onSave={onFetchPlant}
             />
@@ -173,7 +176,7 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
                   <b>Water Need</b>
                   <p>
                     <Icon of={<Drop />} className="p-Plant--waterIcon" />
-                    {plant.metadata[plant.metadata.length - 1].weeklyWaterNeed} ml per week
+                    {plant.metadata[plant.metadata.length - 1].weeklyWaterNeed}ml per week
                   </p>
                 </div>
                 <div className="p-Plant--section__row">
@@ -186,6 +189,10 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
                 <div className="p-Plant--section__row">
                   <b>Added On</b>
                   <p>{formatTimestamp(plant.createdAt, "M/D/YYYY")}</p>
+                </div>
+                <div className="p-Plant--section__row">
+                  <b>Location</b>
+                  <p>{plant.locationQuery}</p>
                 </div>
                 <div className="p-Plant--section__row--buttons">
                   <Button

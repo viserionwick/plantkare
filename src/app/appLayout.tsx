@@ -85,9 +85,6 @@ const Layout: any = ({ children, userSession }: { children: ReactNode, userSessi
                         <Link className="l-App--menu__item" onClick={toggleMenu} activePath={pathname} href="/plants">
                             Plants
                         </Link>
-                        <Link className="l-App--menu__item" onClick={toggleMenu} activePath={pathname} href="/locations">
-                            Locations
-                        </Link>
                     </div>
                     <div className="l-App--user">
                         <Button

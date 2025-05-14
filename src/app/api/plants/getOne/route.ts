@@ -42,12 +42,12 @@ export async function POST(req: NextRequest) {
                 endDate: moment().format("YYYY-MM-DD")
             },
             {
-                latitude: "37.7749",
-                longitude: "-122.4194"
+                latitude: plantData.location.latitude,
+                longitude:  plantData.location.longitude
             }
         );
 
-        const plantHealthToday = evaluatePlantHealth(weatherData.actualRainMm[0], weatherData.actualHumidity[0], {
+        const plantHealthToday = evaluatePlantHealth(weatherData.actualRainMm[7], weatherData.actualHumidity[7], {
             weeklyWaterMl: plantData.metadata[plantData.metadata.length - 1].weeklyWaterNeed,
             expectedHumidity: plantData.metadata[plantData.metadata.length - 1].expectedHumidity,
         });
@@ -61,8 +61,8 @@ export async function POST(req: NextRequest) {
             today: {
                 plantHealth: plantHealthToday,
                 weather: {
-                    actualRainMl: weatherData.actualRainMm[0] * 1000 * 0.1, // Convert MM to ML
-                    actualHumidty: weatherData.actualHumidity[0]
+                    actualRainMl: weatherData.actualRainMm[7] * 1000 * 0.1, // Convert MM to ML
+                    actualHumidty: weatherData.actualHumidity[7]
                 }
             },
             thisWeek: {

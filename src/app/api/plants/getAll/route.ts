@@ -63,16 +63,14 @@ export async function POST(req: NextRequest) {
 
         const plantsWithStatus = await Promise.all(
             plants.map(async (plant) => {
-                console.log(plant);
-
                 const weatherData = await fetchWeatherInfo(
                     {
                         startDate: moment().format("YYYY-MM-DD"),
                         endDate: moment().format("YYYY-MM-DD")
                     },
                     {
-                        latitude: "37.7749",
-                        longitude: "-122.4194"
+                        latitude: plant.location.latitude,
+                        longitude: plant.location.longitude
                     }
                 );
 
