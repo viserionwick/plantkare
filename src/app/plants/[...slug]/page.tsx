@@ -22,7 +22,7 @@ type PROPS = {
   params: Promise<{ slug: string }>
 }
 
-const PAGE = async ({ params }: PROPS) => {
+const PLANT = async ({ params }: PROPS) => {
   const { slug } = await params;
   const isBot = await checkBot();
   const userSession = await getSessionData() as UserSession;  
@@ -32,4 +32,4 @@ const PAGE = async ({ params }: PROPS) => {
   />
 }
 
-export default PAGE;
+export default PLANT;

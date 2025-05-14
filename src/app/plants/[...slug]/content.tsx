@@ -62,7 +62,6 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
         const fetchedPlant = response.data.plant;
         const fetchedPlantStatus = response.data.status;
         const fetchedPlantHistory = response.data.status.thisWeek.plantHealth;
-        console.log("fetchedPlantStatus: ", fetchedPlantStatus);
 
         setPlant(fetchedPlant);
         setPlantLoading(false);

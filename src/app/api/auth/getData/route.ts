@@ -41,8 +41,8 @@ export async function POST(req: NextRequest) {
                 message: "Error verifying idToken.",
                 status: 400,
                 headers: {
-                    from: "signup",
-                    key: "wrong"
+                    from: "auth_getData",
+                    key: "idToken"
                 }
             }, 400);
         } else return nextErrorReturner(error, 400);

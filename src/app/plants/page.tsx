@@ -20,10 +20,10 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-const ROOT = async () => {
+const PLANTS = async () => {
   const isBot = await checkBot();
   const userSession = await getSessionData() as UserSession;
   return <CONTENT userSession={isBot ? "bot" : userSession!} />
 }
 
-export default ROOT;
+export default PLANTS;

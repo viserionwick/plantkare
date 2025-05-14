@@ -24,9 +24,12 @@ interface PROPS {
 const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
   const test = async () => {
     try {
-      const response = await fetchGeocode("new york");
-      console.log("response: ", response);
-      
+      const plantHealthToday = evaluatePlantHealth(290, 23.7, {
+        weeklyWaterMl: 290,
+        expectedHumidity: 23.7,
+      });
+
+      console.log("plantHealthToday: ", plantHealthToday);
     } catch (error: any) {
       console.log("error: ", error);
     }
