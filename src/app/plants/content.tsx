@@ -19,6 +19,8 @@ import Headline from "@/components/pages/Headline/Headline";
 import Button from "@/components/ui/Button/Button";
 import PlantCard from "@/components/pages/PlantCard/PlantCard";
 import PlantDialog from "@/components/dialogs/Plant/PlantDialog";
+import Icon from "@/components/ui/Icon/Icon";
+import { PottedPlant } from "@phosphor-icons/react";
 
 interface PROPS {
   userSession: UserSession | "bot";
@@ -30,7 +32,7 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
 
   const [plants, setPlants] = useState<Plant[]>([]);
   const [plantsTotalAmount, setPlantsTotalAmount] = useState(0);
-  const [plantsLoading, setPlantsLoading] = useState(true);
+  const [plantsLoading, setPlantsLoading] = useState(false);
   const [plantsHasMore, setPlantsHasMore] = useState(false);
   const [plantsMoreLoading, setPlantsMoreLoading] = useState(false);
   const [plantsNextCursor, setPlantsNextCursor] = useState<Timestamp | null>(null);
@@ -71,7 +73,7 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
     }
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (currentUser) {
       const openNewPlantDialog = queries.get("new");
       if (openNewPlantDialog === "true") {
@@ -80,7 +82,7 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
 
       onFetchPlants()
     };
-  }, [currentUser]);
+  }, [currentUser]); */
 
   return (
     <div className="p-Plants">
@@ -109,9 +111,12 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
                 healthPercentage={plant.plantHealthToday?.score || 0}
               />
             ))
-            : plantsLoading
-              ? "Loading..."
-              : "Add a plant first! Plants will be displayed here."
+            : !plantsLoading
+              ? <div className="p-Plants--list__empty">
+                <b>Add a plant first! All plants will be displayed here.</b>
+                <Icon of={<PottedPlant />} />
+              </div>
+              : "Loading..."
         }
       </div>
       {
