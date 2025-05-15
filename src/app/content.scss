@@ -50,6 +50,17 @@
                     flex: 1 1 100%;
                 }
             }
+
+            .p-Home--recentPlants__list__empty {
+                b {
+                    font-size: 14px;
+                }
+
+                .c-Icon {
+                    font-size: 39px;
+                    margin-top: 25px;
+                }
+            }
         }
 
         .p-Home--recentPlants__goToPlants {

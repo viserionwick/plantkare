@@ -2,7 +2,7 @@
 
 // Essentials
 import { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 // Contexts
@@ -18,6 +18,8 @@ import Section from "@/components/pages/Section/Section";
 import SectionHeader from "@/components/pages/Section/SectionHeader";
 import PlantCard from "@/components/pages/PlantCard/PlantCard";
 import Button from "@/components/ui/Button/Button";
+import Icon from "@/components/ui/Icon/Icon";
+import { PottedPlant } from "@phosphor-icons/react";
 
 interface PROPS {
   userSession: UserSession | "bot";
@@ -28,7 +30,7 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
 
   const [plants, setPlants] = useState<Plant[]>([]);
   const [plantsTotalAmount, setPlantsTotalAmount] = useState(0);
-  const [plantsLoading, setPlantsLoading] = useState(true);
+  const [plantsLoading, setPlantsLoading] = useState(false);
   const [plantsAverageHealth, setPlantsAverageHealth] = useState(0);
 
   const onFetchPlants = async () => {
@@ -53,9 +55,9 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
     }
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (currentUser) onFetchPlants();
-  }, [currentUser]);
+  }, [currentUser]); */
 
   return (
     <div className="p-Home">
@@ -89,34 +91,13 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
                   healthPercentage={plant.plantHealthToday?.score || 0}
                 />
               ))
-              : plantsLoading
-                ? "Loading..."
-                : "Add a plant first! Plants will be displayed here."
+              : !plantsLoading
+                ? <div className="p-Home--recentPlants__list__empty">
+                  <b>Add a plant first! Recently added plants will be displayed here.</b>
+                  <Icon of={<PottedPlant />} />
+                </div>
+                : "Loading..."
           }
-          {/* <PlantCard
-            id={"plant.id"}
-            name={"plant.name"}
-            type={"plant.type"}
-            expectedHumidity={10}
-            weeklyWaterNeed={20}
-            healthPercentage={100}
-          />
-          <PlantCard
-            id={"plant.id"}
-            name={"plant.name"}
-            type={"plant.type"}
-            expectedHumidity={10}
-            weeklyWaterNeed={20}
-            healthPercentage={100}
-          />
-          <PlantCard
-            id={"plant.id"}
-            name={"plant.name"}
-            type={"plant.type"}
-            expectedHumidity={10}
-            weeklyWaterNeed={20}
-            healthPercentage={100}
-          /> */}
         </div>
         <Button
           className="p-Home--recentPlants__goToPlants"
