@@ -15,10 +15,7 @@ import Button from "@/components/ui/Button/Button";
 import Icon from "@/components/ui/Icon/Icon";
 import { X, List, SignOut } from "@phosphor-icons/react";
 
-// Models
-import { UserSession } from "@/models/User";
-
-const Layout: any = ({ children, userSession }: { children: ReactNode, userSession: UserSession }) => {
+const Layout: any = ({ children }: { children: ReactNode }) => {
     const pathname = usePathname();
 
     const {
@@ -103,7 +100,7 @@ const Layout: any = ({ children, userSession }: { children: ReactNode, userSessi
     )
 }
 
-const AppLayout: any = ({ children, userSession }: { children: ReactNode, userSession: UserSession }) => {
+const AppLayout: any = ({ children }: { children: ReactNode }) => {
     const pathname = usePathname();
     const layoutBlacklist = [
         "/auth"
@@ -112,7 +109,7 @@ const AppLayout: any = ({ children, userSession }: { children: ReactNode, userSe
     if (isBlacklistedRoute) {
         return children
     } else {
-        return <Layout userSession={userSession}>
+        return <Layout>
             {children}
         </Layout>
     }

@@ -9,12 +9,11 @@ import { nextErrorReturner } from "@/utils/error/errorReturner";
 
 interface BODY {
     userSession?: UserSession;
-    isBot?: boolean;
 }
 
 export async function POST(req: NextRequest) { // Create cookie.
     try {
-        const { userSession, isBot } = await req.json() as BODY;        
+        const { userSession } = await req.json() as BODY;        
 
         const expiresIn = 50 * 365.25 * 24 * 60 * 60 * 1000; // 50 years in milliseconds.
         const cookieMaxAge = expiresIn / 1000; // Convert to seconds for cookie maxAge.

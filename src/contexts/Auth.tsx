@@ -33,7 +33,7 @@ import { validate_user_email } from "@/models/validators/User/user.email";
 import { validate_user_password } from "@/models/validators/User/user.password";
 
 // Models
-import { UserProfile, UserLoginCredentials, UserSignupCredentials, UserDoc, UserSession } from "@/models/User";
+import { UserProfile, UserLoginCredentials, UserSignupCredentials, UserDoc } from "@/models/User";
 
 // Types
 export type LoginUser = ({ }: UserLoginCredentials | object, fromRegister?: boolean) => Promise<any>;

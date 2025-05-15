@@ -1,7 +1,7 @@
 "use client"
 
 // Essentials
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { NextPage } from "next";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
