@@ -57,7 +57,7 @@ export const middleware = async (req: NextRequest) => {
             const userToRedirect = await authRedirect(req, "/");
             if (userToRedirect) return userToRedirect;
         }
-        if (pathname.startsWith("/")) {
+        if (pathname.startsWith("/") && !pathname.startsWith("/auth")) {
             const userToRedirect = await authRedirect(req, "/auth/signup", false);
             if (userToRedirect) return userToRedirect;
         }
