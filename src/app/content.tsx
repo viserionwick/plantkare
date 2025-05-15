@@ -20,6 +20,8 @@ import PlantCard from "@/components/pages/PlantCard/PlantCard";
 import Button from "@/components/ui/Button/Button";
 import Icon from "@/components/ui/Icon/Icon";
 import { PottedPlant } from "@phosphor-icons/react";
+import LOADING_PLANTS from "./(loading)/recentlyAddedPlants";
+import LOADING_STATUSSECTION from "./(loading)/statusSection";
 
 interface PROPS {
   userSession: UserSession | "bot";
@@ -64,41 +66,48 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
       {/* <button onClick={test}>test</button> */}
       <Headline>Your Virtual Garden</Headline>
       <div className="p-Home--currentData">
-        <Section>
-          <SectionHeader title={plantsTotalAmount.toString()}>
-            <p>Total Plants</p>
-          </SectionHeader>
-        </Section>
-        <Section>
-          <SectionHeader title={plantsAverageHealth + "%"}>
-            <p>Average Health Today</p>
-          </SectionHeader>
-        </Section>
+        {
+          plantsLoading ? <LOADING_STATUSSECTION /> :
+            <Section>
+              <SectionHeader title={plantsTotalAmount.toString()}>
+                <p>Total Plants</p>
+              </SectionHeader>
+            </Section>
+        }
+        {
+          plantsLoading ? <LOADING_STATUSSECTION /> :
+            <Section>
+              <SectionHeader title={plantsAverageHealth + "%"}>
+                <p>Average Health Today</p>
+              </SectionHeader>
+            </Section>
+        }
       </div>
       <Section className="p-Home--recentPlants">
         <SectionHeader title="Recently Added Plants" />
-        <div className="p-Home--recentPlants__list">
-          {
-            plants.length && !plantsLoading
-              ? plants.map((plant, i) => (
-                <PlantCard
-                  key={i}
-                  id={plant.id!}
-                  name={plant.name}
-                  type={plant.type}
-                  expectedHumidity={plant.metadata[plant.metadata.length - 1].expectedHumidity}
-                  weeklyWaterNeed={plant.metadata[plant.metadata.length - 1].weeklyWaterNeed}
-                  healthPercentage={plant.plantHealthToday?.score || 0}
-                />
-              ))
-              : !plantsLoading
-                ? <div className="p-Home--recentPlants__list__empty">
-                  <b>Add a plant first! Recently added plants will be displayed here.</b>
-                  <Icon of={<PottedPlant />} />
-                </div>
-                : "Loading..."
-          }
-        </div>
+        {
+          plantsLoading ? <LOADING_PLANTS /> :
+            <div className="p-Home--recentPlants__list">
+              {
+                plants.length
+                  ? plants.map((plant, i) => (
+                    <PlantCard
+                      key={i}
+                      id={plant.id!}
+                      name={plant.name}
+                      type={plant.type}
+                      expectedHumidity={plant.metadata[plant.metadata.length - 1].expectedHumidity}
+                      weeklyWaterNeed={plant.metadata[plant.metadata.length - 1].weeklyWaterNeed}
+                      healthPercentage={plant.plantHealthToday?.score || 0}
+                    />
+                  ))
+                  : <div className="p-Home--recentPlants__list__empty">
+                    <b>Add a plant first! Recently added plants will be displayed here.</b>
+                    <Icon of={<PottedPlant />} />
+                  </div>
+              }
+            </div>
+        }
         {
           plantsLoading ? <></> :
             <Button

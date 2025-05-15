@@ -33,6 +33,10 @@ import fetchWeatherInfo from "@/utils/fetchWearherInfo";
 import Section from "@/components/pages/Section/Section";
 import SectionHeader from "@/components/pages/Section/SectionHeader";
 import SectionRow from "@/components/pages/Section/SectionRow";
+import LOADING from "@/components/pages/Loading/Loading";
+import SectionData from "@/components/pages/Section/SectionData";
+import SectionHeaderWrapper from "@/components/pages/Section/SectionHeaderWrapper";
+/* import LOADING_DATA from "./(loading)/data"; */
 
 interface PROPS {
   userSession: UserSession | "bot";
@@ -123,10 +127,10 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
       return (
         <div className="p-Plant--healthHistoryChart__tooltip">
           <b>{label}</b>
-          <p>Health: <b>{score}%</b></p>
+          <div>Health: <b>{score}%</b></div>
           {
             !issues.length ? <></> :
-              <p>Issues: <b>{issues.join(", ")}</b></p>
+              <div>Issues: <b>{issues.join(", ")}</b></div>
           }
         </div>
       );
@@ -140,127 +144,169 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
   return (
     <div className="p-Plant">
       {
-        !plant || plantLoading ? "loading..." :
-          <>
-            <Headline>
-              <Button href="/plants" inverted>
-                <Icon of={<ArrowLeft />} />
-              </Button>
-              {plant.name}
-            </Headline>
-            <PlantDialog
-              open={plantUpdate}
-              onOpenChange={setPlantUpdate}
-              plantToUpdate={{
-                plantID: plant.id!,
-                name: plant.name,
-                type: plant.type,
-                weeklyWaterNeed: plant.metadata[plant.metadata.length - 1].weeklyWaterNeed,
-                expectedHumidity: plant.metadata[plant.metadata.length - 1].expectedHumidity,
-                locationQuery: plant.locationQuery
-              }}
-              onSave={onFetchPlant}
-            />
-            <VerifyDialog
-              open={plantDelete}
-              onOpenChange={setPlantDelete}
-              onApprove={onDeletePlant}
-              data={plant.id!}
-              approveButton="Yes, delete this plant."
-              loading={plantDeleting}
-              content={"You can not undo plant data deletion. Are you ok with that?"}
-            />
-            <div className="p-Plant--sections">
-              <Section>
-                <SectionHeader title="Plant Information">
-                  <b>Details and metadata</b>
-                </SectionHeader>
-                <SectionRow title="Plant Type">
-                  <p>{plant.type}</p>
-                </SectionRow>
-                <SectionRow title="Water Need">
-                  <p>
-                    <Icon of={<Drop />} className="p-Plant--waterIcon" />
-                    {plant.metadata[plant.metadata.length - 1].weeklyWaterNeed}ml per week
-                  </p>
-                </SectionRow>
-                <SectionRow title="Expected Humidity">
-                  <p>
-                    <Icon of={<Leaf />} className="p-Plant--leafIcon" />
-                    {plant.metadata[plant.metadata.length - 1].expectedHumidity}%
-                  </p>
-                </SectionRow>
-                <SectionRow title="Added On">
-                  <p>{formatTimestamp(plant.createdAt, "M/D/YYYY")}</p>
-                </SectionRow>
-                <SectionRow title="Location">
-                  <p>{plant.locationQuery}</p>
-                </SectionRow>
-                <SectionRow isButtonsRow>
-                  <Button
-                    className="p-Plant--editButton"
-                    onClick={setPlantUpdate}
-                  >
-                    <Icon of={<PencilSimple />} />
-                    Edit
-                  </Button>
-                  <Button
-                    className="p-Plant--deleteButton"
-                    style="red"
-                    onClick={setPlantDelete}
-                  >
-                    <Icon of={<TrashSimple />} />
-                    Delete
-                  </Button>
-                </SectionRow>
-              </Section>
-              <Section>
-                <SectionHeader title="Health Status">
-                  <b>Current plant health</b>
-                </SectionHeader>
-                <SectionRow title="Current Health">
-                  <HealthBar percentage={plantStatus!.today.plantHealth.score} />
-                </SectionRow>
-                <SectionRow title="Issues">
+        //!plant || plantLoading ? "loading..." :
+        <>
+          <Headline>
+            <Button href="/plants" inverted>
+              <Icon of={<ArrowLeft />} />
+            </Button>
+            {
+              plantLoading ? <LOADING style={{ width: "100%", maxWidth: "115px", height: "25px" }} /> :
+                plant!.name
+            }
+          </Headline>
+          {
+            !plant ? <></> :
+              <>
+                <PlantDialog
+                  open={plantUpdate}
+                  onOpenChange={setPlantUpdate}
+                  plantToUpdate={{
+                    plantID: plant.id!,
+                    name: plant.name,
+                    type: plant.type,
+                    weeklyWaterNeed: plant.metadata[plant.metadata.length - 1].weeklyWaterNeed,
+                    expectedHumidity: plant.metadata[plant.metadata.length - 1].expectedHumidity,
+                    locationQuery: plant.locationQuery
+                  }}
+                  onSave={onFetchPlant}
+                />
+                <VerifyDialog
+                  open={plantDelete}
+                  onOpenChange={setPlantDelete}
+                  onApprove={onDeletePlant}
+                  data={plant.id!}
+                  approveButton="Yes, delete this plant."
+                  loading={plantDeleting}
+                  content={"You can not undo plant data deletion. Are you ok with that?"}
+                />
+              </>
+          }
+          <div className="p-Plant--sections">
+            <Section>
+              <SectionHeader title="Plant Information">
+                <b>Details and metadata</b>
+              </SectionHeader>
+              <SectionRow title="Plant Type">
+                {
+                  plantLoading ? <LOADING style={{ width: "100%", maxWidth: "90px", height: "20px" }} /> :
+                    <SectionData>{plant!.type}</SectionData>
+                }
+              </SectionRow>
+              <SectionRow title="Water Need">
+                <SectionData>
+                  <Icon of={<Drop />} className="p-Plant--waterIcon" />
                   {
+                    plantLoading ? <LOADING style={{ width: "100%", maxWidth: "130px", height: "20px" }} /> :
+                      <>{plant!.metadata[plant!.metadata.length - 1].weeklyWaterNeed}ml per week</>
+                  }
+                </SectionData>
+              </SectionRow>
+              <SectionRow title="Expected Humidity">
+                <SectionData>
+                  <Icon of={<Leaf />} className="p-Plant--leafIcon" />
+                  {
+                    plantLoading ? <LOADING style={{ width: "100%", maxWidth: "130px", height: "20px" }} /> :
+                      <>{plant!.metadata[plant!.metadata.length - 1].expectedHumidity}%</>
+                  }
+                </SectionData>
+              </SectionRow>
+              <SectionRow title="Added On">
+                {
+                  plantLoading ? <LOADING style={{ width: "100%", maxWidth: "90px", height: "20px" }} /> :
+                    <SectionData>{formatTimestamp(plant!.createdAt, "M/D/YYYY")}</SectionData>
+                }
+              </SectionRow>
+              <SectionRow title="Location">
+                {
+                  plantLoading ? <LOADING style={{ width: "100%", maxWidth: "200px", height: "20px" }} /> :
+                    <SectionData>{plant!.locationQuery}</SectionData>
+                }
+              </SectionRow>
+              <SectionRow isButtonsRow>
+                {
+                  plantLoading ? <LOADING style={{ width: "100%", maxWidth: "60px", height: "29px", borderRadius: "var(--buttonRadius)" }} /> :
+                    <Button
+                      className="p-Plant--editButton"
+                      onClick={setPlantUpdate}
+                    >
+                      <Icon of={<PencilSimple />} />
+                      Edit
+                    </Button>
+                }
+                {
+                  plantLoading ? <LOADING style={{ width: "100%", maxWidth: "73px", height: "29px", borderRadius: "var(--buttonRadius)" }} /> :
+                    <Button
+                      className="p-Plant--deleteButton"
+                      style="red"
+                      onClick={setPlantDelete}
+                    >
+                      <Icon of={<TrashSimple />} />
+                      Delete
+                    </Button>
+                }
+              </SectionRow>
+            </Section>
+            <Section>
+              <SectionHeader title="Health Status">
+                <b>Current plant health</b>
+              </SectionHeader>
+              <SectionRow title="Current Health">
+                {
+                  plantLoading ? <LOADING style={{ width: "100%", maxWidth: "100%", height: "15px", borderRadius: "999px", marginBottom: "20px", marginTop: "5px" }} /> :
+                    <HealthBar percentage={plantStatus!.today.plantHealth.score} />
+                }
+              </SectionRow>
+              <SectionRow title="Issues">
+                {
+                  plantLoading ? <LOADING style={{ width: "100%", maxWidth: "130px", height: "20px" }} /> :
                     !plantStatus!.today.plantHealth.issues.length
                       ? "No issues found."
-                      : plantStatus!.today.plantHealth.issues.map((issue, i) => <p key={i}>
+                      : plantStatus!.today.plantHealth.issues.map((issue, i) => <div key={i}>
                         {issue}
-                      </p>)
-                  }
-                </SectionRow>
-                <SectionRow title="Today's Weather">
-                  Rain: {plantStatus!.today.weather.actualRainMl}ml - Humidity: {plantStatus!.today.weather.actualHumidty}%
-                </SectionRow>
-              </Section>
-            </div>
-            <Section>
-              <SectionHeader isSpaceBetween>
-                <div>
-                  <h2>Health History</h2>
-                  <b>Health changes over time</b>
-                </div>
-                <DatePicker
-                  onDateChange={onFetchPlantHistory}
-                  startDate={moment().subtract(7, "days").toDate()}
-                  endDate={moment().toDate()}
-                />
-              </SectionHeader>
-              <ResponsiveContainer className="p-Plant--healthHistoryChart">
-                <LineChart data={plantHistory!}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip
-                    content={formatHistoryTooltip}
-                  />
-                  <Legend />
-                  <Line type="monotone" dataKey="score" name="Health Percentage" stroke="var(--primaryColor)" />
-                </LineChart>
-              </ResponsiveContainer>
+                      </div>)
+                }
+              </SectionRow>
+              <SectionRow title="Today's Weather">
+                {
+                  plantLoading ? <LOADING style={{ width: "100%", maxWidth: "230px", height: "20px" }} /> :
+                    <>Rain: {plantStatus!.today.weather.actualRainMl}ml - Humidity: {plantStatus!.today.weather.actualHumidty}%</>
+                }
+              </SectionRow>
             </Section>
-          </>
+          </div>
+          <Section>
+            <SectionHeaderWrapper isSpaceBetween>
+              <SectionHeader>
+                <h2>Health History</h2>
+                <b>Health changes over time</b>
+              </SectionHeader>
+              {
+                plantLoading ? <LOADING style={{ width: "100%", maxWidth: "200px", height: "31px", borderRadius: "var(--buttonRadius)" }} /> :
+                  <DatePicker
+                    onDateChange={onFetchPlantHistory}
+                    startDate={moment().subtract(7, "days").toDate()}
+                    endDate={moment().toDate()}
+                  />
+              }
+            </SectionHeaderWrapper>
+            {
+              plantLoading ? <LOADING style={{ width: "100%", maxWidth: "100%", height: "300px" }} /> :
+                <ResponsiveContainer className="p-Plant--healthHistoryChart">
+                  <LineChart data={plantHistory!}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip
+                      content={formatHistoryTooltip}
+                    />
+                    <Legend />
+                    <Line type="monotone" dataKey="score" name="Health Percentage" stroke="var(--primaryColor)" />
+                  </LineChart>
+                </ResponsiveContainer>
+            }
+          </Section>
+        </>
       }
     </div>
   )

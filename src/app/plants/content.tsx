@@ -21,6 +21,7 @@ import PlantCard from "@/components/pages/PlantCard/PlantCard";
 import PlantDialog from "@/components/dialogs/Plant/PlantDialog";
 import Icon from "@/components/ui/Icon/Icon";
 import { PottedPlant } from "@phosphor-icons/react";
+import LOADING_PLANTS from "./(loading)/plants";
 
 interface PROPS {
   userSession: UserSession | "bot";
@@ -87,7 +88,10 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
   return (
     <div className="p-Plants">
       <Headline>
-        All Plants ({plantsTotalAmount})
+        All Plants
+        {
+          plantsLoading ? <></> : <> ({plantsTotalAmount})</>
+        }
         <Button onClick={setNewPlant}>
           New Plant
         </Button>
@@ -97,28 +101,29 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
           onSave={() => onFetchPlants()}
         />
       </Headline>
-      <div className="p-Plants--list">
-        {
-          plants.length && !plantsLoading
-            ? plants.map((plant, i) => (
-              <PlantCard
-                key={i}
-                id={plant.id!}
-                name={plant.name}
-                type={plant.type}
-                expectedHumidity={plant.metadata[plant.metadata.length - 1].expectedHumidity}
-                weeklyWaterNeed={plant.metadata[plant.metadata.length - 1].weeklyWaterNeed}
-                healthPercentage={plant.plantHealthToday?.score || 0}
-              />
-            ))
-            : !plantsLoading
-              ? <div className="p-Plants--list__empty">
-                <b>Add a plant first! All plants will be displayed here.</b>
-                <Icon of={<PottedPlant />} />
-              </div>
-              : "Loading..."
-        }
-      </div>
+      {
+        plantsLoading ? <LOADING_PLANTS /> :
+          <div className="p-Plants--list">
+            {
+              plants.length
+                ? plants.map((plant, i) => (
+                  <PlantCard
+                    key={i}
+                    id={plant.id!}
+                    name={plant.name}
+                    type={plant.type}
+                    expectedHumidity={plant.metadata[plant.metadata.length - 1].expectedHumidity}
+                    weeklyWaterNeed={plant.metadata[plant.metadata.length - 1].weeklyWaterNeed}
+                    healthPercentage={plant.plantHealthToday?.score || 0}
+                  />
+                ))
+                : <div className="p-Plants--list__empty">
+                  <b>Add a plant first! All plants will be displayed here.</b>
+                  <Icon of={<PottedPlant />} />
+                </div>
+            }
+          </div>
+      }
       {
         !plantsHasMore ? <></> :
           <Button

@@ -7,8 +7,8 @@
   --primaryLowlight: #000000;
   --primaryError: #{rgba(red, .6)};
   --primaryRadius: 11px;
-  --skeletonLoadingBackground: #d2d4d6;
-  --skeletonLoadingShimmer: #ffffff;
+  --skeletonLoadingBackground: #{color.adjust($background, $lightness: -7%)};
+  --skeletonLoadingShimmer: #{color.adjust($background, $lightness: -20%)};
 
   // Colors
   --primaryGreen: #{$primaryGreen};
@@ -44,7 +44,8 @@
   --plantCardBorderRadius: 5px;
 
   // Components: Pages: HealthBar
-  --healthBarBackground: #{color.adjust($background, $lightness: -5%)};;
+  --healthBarBackground: #{color.adjust($background, $lightness: -5%)};
+  ;
   --healthBarHealthy: var(--primaryGreen);
   --healthBarModerate: var(--primaryOrange);
   --healthBarDanger: var(--primaryRed);
