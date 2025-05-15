@@ -25,6 +25,7 @@ import PlantDialog from "@/components/dialogs/Plant/PlantDialog";
 import VerifyDialog from "@/components/dialogs/Verify/VerifyDialog";
 import HealthBar from "@/components/pages/HealthBar/HealthBar";
 import DatePicker from "@/components/ui/DatePicker/DatePicker";
+import NOT_FOUND from "./notFound";
 
 // Utils
 import formatTimestamp from "../../../utils/formatTimestamp";
@@ -49,6 +50,7 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
   const [plantDeleting, setPlantDeleting] = useState(false);
   const [plantStatus, setPlantStatus] = useState<PlantStatus | null>(null);
   const [plantHistory, setPlantHistory] = useState<PlantHealthHistory | null>(null);
+  const [plantNotFound, setPlantNotFound] = useState(false);
 
   useEffect(() => {
     if (currentUser) onFetchPlant();
@@ -73,7 +75,9 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
       }
     } catch (error: any) {
       setPlantLoading(false);
-      console.log("error: ", error);
+      if (error.status === 404) { // Plant not found.
+        setPlantNotFound(true);
+      }
     }
   }
 
@@ -130,6 +134,8 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
 
     return null;
   };
+
+  if (plantNotFound) return <NOT_FOUND />
 
   return (
     <div className="p-Plant">

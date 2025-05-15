@@ -32,7 +32,7 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
 
   const [plants, setPlants] = useState<Plant[]>([]);
   const [plantsTotalAmount, setPlantsTotalAmount] = useState(0);
-  const [plantsLoading, setPlantsLoading] = useState(false);
+  const [plantsLoading, setPlantsLoading] = useState(true);
   const [plantsHasMore, setPlantsHasMore] = useState(false);
   const [plantsMoreLoading, setPlantsMoreLoading] = useState(false);
   const [plantsNextCursor, setPlantsNextCursor] = useState<Timestamp | null>(null);
@@ -73,7 +73,7 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
     }
   }
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (currentUser) {
       const openNewPlantDialog = queries.get("new");
       if (openNewPlantDialog === "true") {
@@ -82,7 +82,7 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
 
       onFetchPlants()
     };
-  }, [currentUser]); */
+  }, [currentUser]);
 
   return (
     <div className="p-Plants">
