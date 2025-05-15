@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import axios from "axios";
 import { Timestamp } from "firebase/firestore";
+import { useSearchParams } from "next/navigation";
 
 // Contexts
 import { useAuthContext } from "@/contexts/Auth";
@@ -24,6 +25,7 @@ interface PROPS {
 }
 
 const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
+  const queries = useSearchParams();
   const { getIdToken, currentUser } = useAuthContext();
 
   const [plants, setPlants] = useState<Plant[]>([]);
@@ -65,12 +67,19 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
         setPlantsMoreLoading(false);
       }
     } catch (error: any) {
-
+      console.error("error: ", error);
     }
   }
 
   useEffect(() => {
-    if (currentUser) onFetchPlants();
+    if (currentUser) {
+      const openNewPlantDialog = queries.get("new");
+      if (openNewPlantDialog === "true") {
+        setNewPlant(true);
+      }
+
+      onFetchPlants()
+    };
   }, [currentUser]);
 
   return (

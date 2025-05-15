@@ -1,7 +1,7 @@
 "use client"
 
 type SectionHeaderProps = {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     title?: string;
     className?: string;
     isSpaceBetween?: boolean;
@@ -26,7 +26,11 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
                     ? <h2>{title}</h2>
                     : <></>
             }
-            {children}
+            {
+                children
+                    ? children
+                    : <></>
+            }
         </div>
     );
 };

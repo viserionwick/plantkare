@@ -2,4 +2,58 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    $allSectionsGap: 30px;
+
+    .p-Home--currentData {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: $allSectionsGap;
+        margin-bottom: $allSectionsGap;
+
+        .c-Section {
+            max-width: 100%;
+            min-width: 290px;
+            flex: calc(50% - $allSectionsGap);
+
+            @include MobileView {
+                max-width: 100%;
+                min-width: unset;
+                flex: 1 1 calc(100% - $allSectionsGap);
+            }
+        }
+    }
+
+    .p-Home--recentPlants {
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        .p-Home--recentPlants__list {
+            flex-wrap: wrap;
+            gap: 10px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+
+            .c-PlantCard {
+                max-width: 30%;
+                flex: 1 1 30%;
+
+                @include TabletView {
+                    max-width: 48%;
+                    flex: 1 1 50%;
+                }
+
+                @include MobileView {
+                    max-width: 100%;
+                    flex: 1 1 100%;
+                }
+            }
+        }
+
+        .p-Home--recentPlants__goToPlants {
+            margin-top: 25px;
+        }
+    }
 }

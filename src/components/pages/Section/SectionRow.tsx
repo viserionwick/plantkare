@@ -1,7 +1,7 @@
 "use client"
 
 type SectionRowProps = {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     className?: string;
     title?: string;
     isButtonsRow?: boolean;
@@ -22,10 +22,14 @@ const SectionRow: React.FC<SectionRowProps> = ({
         >
             {
                 title
-                ? <b>{title}</b>
-                : <></>
+                    ? <b>{title}</b>
+                    : <></>
             }
-            {children}
+            {
+                children
+                    ? children
+                    : <></>
+            }
         </div>
     );
 };
