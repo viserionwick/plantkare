@@ -2,7 +2,7 @@
 
 // Essentials
 import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 // Contexts
@@ -30,7 +30,7 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
 
   const [plants, setPlants] = useState<Plant[]>([]);
   const [plantsTotalAmount, setPlantsTotalAmount] = useState(0);
-  const [plantsLoading, setPlantsLoading] = useState(false);
+  const [plantsLoading, setPlantsLoading] = useState(true);
   const [plantsAverageHealth, setPlantsAverageHealth] = useState(0);
 
   const onFetchPlants = async () => {
@@ -55,9 +55,9 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
     }
   }
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (currentUser) onFetchPlants();
-  }, [currentUser]); */
+  }, [currentUser]);
 
   return (
     <div className="p-Home">
@@ -99,20 +99,23 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
                 : "Loading..."
           }
         </div>
-        <Button
-          className="p-Home--recentPlants__goToPlants"
-          href={
-            plantsTotalAmount === 0
-              ? "/plants?new=true"
-              : "/plants"
-          }
-        >
-          {
-            plantsTotalAmount === 0
-              ? "Add a plant"
-              : "See all plants"
-          }
-        </Button>
+        {
+          plantsLoading ? <></> :
+            <Button
+              className="p-Home--recentPlants__goToPlants"
+              href={
+                plantsTotalAmount === 0
+                  ? "/plants?new=true"
+                  : "/plants"
+              }
+            >
+              {
+                plantsTotalAmount === 0
+                  ? "Add a plant"
+                  : "See all plants"
+              }
+            </Button>
+        }
       </Section>
     </div>
   )
