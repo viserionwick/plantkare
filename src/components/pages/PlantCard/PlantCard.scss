@@ -102,6 +102,18 @@
                 margin-right: 2px;
             }
         }
+
+        .c-PlantCard--data__weeklyWaterNeed .c-Icon {
+            color: var(--primaryBlue);
+        }
+
+        .c-PlantCard--data__expectedHumidity .c-Icon {
+            color: var(--primaryGreen);
+        }
+
+        .c-Icon {
+            font-size: 19px;
+        }
     }
 
     .c-PlantCard--viewDetails {
