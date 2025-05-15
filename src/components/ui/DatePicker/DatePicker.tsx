@@ -10,6 +10,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 type DatePickerProps = {
+    className?: string;
     onDateChange: (dates: {
         startDate: Date;
         endDate: Date;
@@ -19,6 +20,7 @@ type DatePickerProps = {
 };
 
 const DatePicker: React.FC<DatePickerProps> = ({
+    className,
     onDateChange,
     startDate,
     endDate
@@ -51,7 +53,12 @@ const DatePicker: React.FC<DatePickerProps> = ({
     };
 
     return (
-        <div className="c-DatePicker--wrapper">
+        <div
+            className={`
+                c-DatePicker--wrapper
+                ${className ? className : ""}
+            `}
+        >
             <ReactDatePicker
                 selected={startDate}
                 onChange={onChange}

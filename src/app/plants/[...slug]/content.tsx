@@ -284,6 +284,7 @@ const CONTENT: NextPage<PROPS> = ({ slug }) => {
               {
                 plantLoading ? <LOADING style={{ width: "100%", maxWidth: "200px", height: "31px", borderRadius: "var(--buttonRadius)" }} /> :
                   <DatePicker
+                    className="p-Plant--healthHistoryChart--datePicker"
                     onDateChange={onFetchPlantHistory}
                     startDate={moment().subtract(7, "days").toDate()}
                     endDate={moment().toDate()}

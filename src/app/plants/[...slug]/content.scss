@@ -49,6 +49,18 @@
             font-weight: 600;
         }
     }
+
+    .p-Plant--healthHistoryChart--datePicker {
+        @include MobileView {
+            margin: 5px 0 30px 0;
+            width: 100%;
+
+            >div,
+            .c-DatePicker {
+                width: 100%;
+            }
+        }
+    }
 }
 
 .p-Plant--notFound {
