@@ -63,7 +63,6 @@ const CONTENT: NextPage<PROPS> = (/* { userSession } */) => {
 
   return (
     <div className="p-Home">
-      {/* <button onClick={test}>test</button> */}
       <Headline>Your Virtual Garden</Headline>
       <div className="p-Home--currentData">
         {
